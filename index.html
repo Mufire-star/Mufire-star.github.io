@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mufire-star · 博客</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="viewport">
+    <!-- 导航栏 -->
+    <header class="site-header">
+      <a href="index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link is-active">首页</a>
+        <a href="tags/index.html" class="nav-link">标签</a>
+        <a href="categories/index.html" class="nav-link">分类</a>
+        <a href="about/index.html" class="nav-link">关于</a>
+      </nav>
+    </header>
+
+    <!-- 主布局 -->
+    <div class="main-grid">
+      <main class="main-content">
+
+        <!-- 个人介绍卡片 -->
+        <section class="profile-card">
+          <div class="avatar-frame">
+            <span class="avatar-placeholder">M</span>
+          </div>
+          <div class="profile-text">
+            <h1>Mufire-star</h1>
+            <p class="tagline">FPGA / 硬件加速 / AI 编译器 / 芯片设计</p>
+            <p class="bio">
+              一只正在努力搬砖的硬件工程师 (ฅ^u u^ฅ)<br>
+              记录所有项目的总结、技术笔记和踩坑经历。<br>
+              FPGA 开发 · Vitis HLS · LLM4HLS · 开源芯片设计 · RISC-V · 嵌入式
+            </p>
+            <div class="profile-links">
+              <a href="https://github.com/Mufire-star" target="_blank">GitHub</a>
+              <a href="https://github.com/Mufire-star/FPT" target="_blank">FPT'26</a>
+              <a href="about/index.html">关于我</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- 文章列表 -->
+        <section>
+          <div class="section-heading">
+            <h2 class="section-title">项目总结</h2>
+            <span class="section-count">6 篇</span>
+          </div>
+
+          <div class="post-list">
+
+            <article class="post-card">
+              <h3 class="post-card-title"><a href="src/fpt26-track-a.html">FPT'26 Track A：LLM4HLS Agent —— 用大语言模型辅助高层次综合</a></h3>
+              <div class="post-card-meta">
+                <span class="meta-pill meta-date">2026-05-17</span>
+                <a href="categories/index.html#category-项目" class="meta-pill">项目</a>
+                <a href="categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
+                <a href="tags/index.html#tag-LLM" class="meta-pill">#LLM</a>
+                <a href="tags/index.html#tag-HLS" class="meta-pill">#HLS</a>
+                <a href="tags/index.html#tag-FPT" class="meta-pill">#FPT</a>
+              </div>
+              <p class="post-card-excerpt">
+                FPT'26 Design Competition Track A 项目——6 阶段 LLM Agent 工作流，自动生成 Vitis HLS 代码。DeepSeek API + RAG 增强 + 反馈循环 + IEEE 论文。
+              </p>
+            </article>
+
+            <article class="post-card">
+              <h3 class="post-card-title"><a href="src/gcnn-dvs-fpga.html">GCNN-DVS：基于事件相机的图卷积神经网络 FPGA 加速</a></h3>
+              <div class="post-card-meta">
+                <span class="meta-pill meta-date">2026-05-19</span>
+                <a href="categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
+                <a href="tags/index.html#tag-FPGA" class="meta-pill">#FPGA</a>
+                <a href="tags/index.html#tag-GCNN" class="meta-pill">#GCNN</a>
+                <a href="tags/index.html#tag-ZCU104" class="meta-pill">#ZCU104</a>
+              </div>
+              <p class="post-card-excerpt">
+                首个在 SoC FPGA 上加速图卷积神经网络处理事件相机数据的开源方案。SystemVerilog 实现，ZCU104 平台，MNIST-DVS 和 N-Cars 数据集验证。
+              </p>
+            </article>
+
+            <article class="post-card">
+              <h3 class="post-card-title"><a href="src/silicon-trace-open.html">硅迹开源 (SiliconTrace Open)：全开源芯片设计链路</a></h3>
+              <div class="post-card-meta">
+                <span class="meta-pill meta-date">2026-05-14</span>
+                <a href="categories/index.html#category-芯片设计" class="meta-pill">芯片设计</a>
+                <a href="tags/index.html#tag-开源EDA" class="meta-pill">#开源EDA</a>
+                <a href="tags/index.html#tag-SKY130" class="meta-pill">#SKY130</a>
+                <a href="tags/index.html#tag-RISC-V" class="meta-pill">#RISC-V</a>
+              </div>
+              <p class="post-card-excerpt">
+                不依赖商业 EDA，仅用开源工具走完从 RTL 到 GDSII 再到板级验证的完整芯片设计链路。Yosys + iEDA + SKY130 + KiCad。
+              </p>
+            </article>
+
+            <article class="post-card">
+              <h3 class="post-card-title"><a href="src/k1-rvv-env.html">K1 RVV 加速 &amp; SNN-STDP FPGA 实现总结</a></h3>
+              <div class="post-card-meta">
+                <span class="meta-pill meta-date">2026-05-10</span>
+                <a href="categories/index.html#category-嵌入式" class="meta-pill">嵌入式</a>
+                <a href="categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
+                <a href="tags/index.html#tag-RVV" class="meta-pill">#RVV</a>
+                <a href="tags/index.html#tag-K1" class="meta-pill">#K1</a>
+                <a href="tags/index.html#tag-SNN" class="meta-pill">#SNN</a>
+              </div>
+              <p class="post-card-excerpt">
+                MUSE Pi K1 RISC-V 上的 RVV 向量加速音频分析系统 + ZCU104 上的 SNN-STDP 脉冲神经网络 FPGA 实现。
+              </p>
+            </article>
+
+            <article class="post-card">
+              <h3 class="post-card-title"><a href="src/ai-tools-workspace.html">AI 工具合集：聚合 AI · AiWorkspace · DeepSeek-TUI</a></h3>
+              <div class="post-card-meta">
+                <span class="meta-pill meta-date">2026-05-16</span>
+                <a href="categories/index.html#category-AI工具" class="meta-pill">AI 工具</a>
+                <a href="tags/index.html#tag-OpenAI" class="meta-pill">#OpenAI</a>
+                <a href="tags/index.html#tag-Rust" class="meta-pill">#Rust</a>
+                <a href="tags/index.html#tag-Vue" class="meta-pill">#Vue</a>
+              </div>
+              <p class="post-card-excerpt">
+                OpenAI API 中转管理 (juhe-ai) + 多角色 AI 协作工作台 (AiWorkspace) + Rust 实现的 DeepSeek 终端编码 Agent。
+              </p>
+            </article>
+
+            <article class="post-card">
+              <h3 class="post-card-title"><a href="src/misc-projects.html">其他项目合集：CNN-DVS · RISC-V CPU · KiCad 测试板</a></h3>
+              <div class="post-card-meta">
+                <span class="meta-pill meta-date">2026-05-06</span>
+                <a href="categories/index.html#category-芯片设计" class="meta-pill">芯片设计</a>
+                <a href="categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
+                <a href="tags/index.html#tag-RISC-V" class="meta-pill">#RISC-V</a>
+                <a href="tags/index.html#tag-CNN" class="meta-pill">#CNN</a>
+                <a href="tags/index.html#tag-KiCad" class="meta-pill">#KiCad</a>
+              </div>
+              <p class="post-card-excerpt">
+                红外 Tiny YOLO 检测、单周期 RISC-V CPU Verilog 实现、Xilinx FINN 框架探索、KiCad PCB 测试板设计。
+              </p>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- 分类网格（主页下方） -->
+        <section style="margin-top: 36px;">
+          <div class="section-heading">
+            <h2 class="section-title">分类合集</h2>
+            <span class="section-count">6 个分类</span>
+          </div>
+
+          <div class="category-grid">
+
+            <div class="category-card">
+              <a href="categories/index.html#category-硬件加速">
+                <h3>硬件加速</h3>
+                <span class="cat-count">3 篇文章</span>
+              </a>
+            </div>
+            <div class="category-card">
+              <a href="categories/index.html#category-芯片设计">
+                <h3>芯片设计</h3>
+                <span class="cat-count">2 篇文章</span>
+              </a>
+            </div>
+            <div class="category-card">
+              <a href="categories/index.html#category-项目">
+                <h3>项目</h3>
+                <span class="cat-count">1 篇文章</span>
+              </a>
+            </div>
+            <div class="category-card">
+              <a href="categories/index.html#category-AI工具">
+                <h3>AI 工具</h3>
+                <span class="cat-count">1 篇文章</span>
+              </a>
+            </div>
+            <div class="category-card">
+              <a href="categories/index.html#category-嵌入式">
+                <h3>嵌入式</h3>
+                <span class="cat-count">1 篇文章</span>
+              </a>
+            </div>
+            <div class="category-card">
+              <a href="categories/index.html#category-随笔">
+                <h3>随笔 / 生活</h3>
+                <span class="cat-count">0 篇</span>
+              </a>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+
+      <!-- 侧边栏 -->
+      <aside class="sidebar">
+        <div class="sidebar-card">
+          <h2 class="sidebar-title">关于本站</h2>
+          <p style="font-size:0.88rem;color:var(--ink-soft);line-height:1.7;">
+            Mufire-star 的个人博客<br>
+            记录所有项目的总结和笔记<br>
+            目前有 <strong>6</strong> 篇项目总结<br>
+            <span style="color:var(--ink-faint);">建站于 2026-05</span>
+          </p>
+        </div>
+        <div class="sidebar-card">
+          <h2 class="sidebar-title">热门标签</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;">
+            <a href="tags/index.html#tag-LLM" class="meta-pill">#LLM</a>
+            <a href="tags/index.html#tag-FPGA" class="meta-pill">#FPGA</a>
+            <a href="tags/index.html#tag-HLS" class="meta-pill">#HLS</a>
+            <a href="tags/index.html#tag-GCNN" class="meta-pill">#GCNN</a>
+            <a href="tags/index.html#tag-开源EDA" class="meta-pill">#开源EDA</a>
+            <a href="tags/index.html#tag-RISC-V" class="meta-pill">#RISC-V</a>
+            <a href="tags/index.html#tag-RVV" class="meta-pill">#RVV</a>
+            <a href="tags/index.html#tag-SKY130" class="meta-pill">#SKY130</a>
+            <a href="tags/index.html#tag-Vitis" class="meta-pill">#Vitis</a>
+            <a href="tags/index.html#tag-FPT" class="meta-pill">#FPT</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <span>&copy; 2026 Mufire-star</span>
+        <span>Powered by GitHub Pages</span>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>

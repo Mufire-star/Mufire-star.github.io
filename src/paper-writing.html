@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学术论文写作笔记 · Mufire-star</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="viewport">
+    <header class="site-header">
+      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
+      <nav class="main-nav">
+        <a href="../index.html" class="nav-link">首页</a>
+        <a href="../tags/index.html" class="nav-link">标签</a>
+        <a href="../categories/index.html" class="nav-link">分类</a>
+        <a href="../about/index.html" class="nav-link">关于</a>
+      </nav>
+    </header>
+
+    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-学习">学习</a> / 学术论文写作笔记</p>
+
+    <div class="main-grid">
+      <main class="main-content">
+        <article>
+          <header class="article-header">
+            <div class="article-meta">
+              <span class="meta-pill meta-date">2026-05-05</span>
+              <a href="../categories/index.html#category-学习" class="meta-pill">学习</a>
+              <a href="../tags/index.html#tag-论文" class="meta-pill">#论文</a>
+              <a href="../tags/index.html#tag-LaTeX" class="meta-pill">#LaTeX</a>
+            </div>
+            <h1>学术论文写作笔记：从实验数据到成稿</h1>
+          </header>
+
+          <div class="article-body">
+            <p>记录使用 IEEE 模板 + xelatex 编译论文的流程和注意事项 (ฅ^u u^ฅ)</p>
+
+            <h2>环境</h2>
+            <ul>
+              <li><strong>TeX Live 2026</strong> 安装在 <code>D:\Programs\texlive\2026</code></li>
+              <li><strong>编辑器</strong>：VS Code + LaTeX Workshop 插件</li>
+              <li><strong>编译器</strong>：xelatex（支持中文）</li>
+              <li><strong>模板</strong>：IEEE Conference Template</li>
+            </ul>
+
+            <h2>编译命令</h2>
+            <pre><code>xelatex paper.tex
+bibtex paper
+xelatex paper.tex
+xelatex paper.tex</code></pre>
+
+            <h2>IEEE 模板中插入代码</h2>
+            <p>使用 <code>listings</code> 宏包：</p>
+            <pre><code>\\usepackage{listings}
+\\lstset{
+  language=C++,
+  basicstyle=\\ttfamily\\footnotesize,
+  frame=single,
+  numbers=left,
+  numberstyle=\\tiny,
+  breaklines=true
+}</code></pre>
+
+            <h2>实验数据表格</h2>
+            <p>推荐使用 <code>booktabs</code> 宏包制作三线表：</p>
+            <pre><code>\\usepackage{booktabs}
+\\begin{table}[t]
+  \\centering
+  \\caption{实验结果对比}
+  \\begin{tabular}{lccc}
+    \\toprule
+    指标 & LLM 生成 & 手写 RTL & 差异 \\\\
+    \\midrule
+    周期 (cycles) & 2.2M & 2.33M & -5.6\% \\\\
+    时序 (ns) & 25.7 & 5.0 & +414\% \\\\
+    \\bottomrule
+  \\end{tabular}
+\\end{table}</code></pre>
+
+            <h2>图表处理</h2>
+            <p>建议使用 SVG 转 PDF 或 TikZ 绘图。对于工作流图，可以用 Inkscape 导出 PDF+TeX 格式，方便在 LaTeX 中直接引用图中的文字。</p>
+
+            <blockquote>
+              小技巧：导出 PDF 前确保所有字体已嵌入，否则 IEEE 审核可能会退回要求修改。
+            </blockquote>
+          </div>
+
+          <nav class="article-pager">
+            <a class="pager-link" href="fpt26-progress.html">上一篇</a>
+            <a class="pager-link" href="../index.html">回到首页</a>
+            <span class="pager-link is-disabled">下一篇</span>
+          </nav>
+        </article>
+      </main>
+
+      <aside class="sidebar">
+        <div class="sidebar-card">
+          <h2 class="sidebar-title">目录</h2>
+          <nav style="font-size:0.88rem;">
+            <p style="color:var(--ink-faint);font-size:0.82rem;">滚动阅读</p>
+          </nav>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <span>&copy; 2026 Mufire-star</span>
+        <span>Powered by GitHub Pages</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

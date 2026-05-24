@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivado / Vitis 2025.2 使用小记 · Mufire-star</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="viewport">
+    <header class="site-header">
+      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
+      <nav class="main-nav">
+        <a href="../index.html" class="nav-link">首页</a>
+        <a href="../tags/index.html" class="nav-link">标签</a>
+        <a href="../categories/index.html" class="nav-link">分类</a>
+        <a href="../about/index.html" class="nav-link">关于</a>
+      </nav>
+    </header>
+
+    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-工具链">工具链</a> / Vivado / Vitis 使用小记</p>
+
+    <div class="main-grid">
+      <main class="main-content">
+        <article>
+          <header class="article-header">
+            <div class="article-meta">
+              <span class="meta-pill meta-date">2026-05-15</span>
+              <a href="../categories/index.html#category-工具链" class="meta-pill">工具链</a>
+              <a href="../categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
+              <a href="../tags/index.html#tag-Vivado" class="meta-pill">#Vivado</a>
+              <a href="../tags/index.html#tag-Vitis" class="meta-pill">#Vitis</a>
+            </div>
+            <h1>Vivado / Vitis 2025.2 使用小记</h1>
+          </header>
+
+          <div class="article-body">
+            <p>Windows 11 下配置 Vitis HLS 2025.2 的一些踩坑记录 (ฅ^u u^ฅ)</p>
+
+            <h2>环境配置</h2>
+            <ul>
+              <li><strong>Vivado / Vitis 2025.2</strong> 安装在 <code>D:\Programs\Xilinx\2025.2</code></li>
+              <li><strong>Git Bash</strong> 使用 <code>D:\Programs\Git\bin\bash.exe</code>，而非 WSL</li>
+              <li><strong>Te&chi; Live 2026</strong> 在 <code>D:\Programs\texlive\2026</code></li>
+            </ul>
+
+            <h2>必须设置 HERMES_GIT_BASH_PATH</h2>
+            <p>在 Hermes Agent 中运行 Vitis HLS 时，必须设置环境变量：</p>
+            <pre><code>export HERMES_GIT_BASH_PATH="D:/Programs/Git/bin/bash.exe"</code></pre>
+            <p>这会强制使用 Git Bash 而不是 WSL，避免 WSLInterop 禁用导致的路径解析问题。</p>
+
+            <h2>常见错误</h2>
+
+            <h3>1. WSL 启动 banner 污染文件内容</h3>
+            <p>当使用 Hermes 的 <code>write_file</code> 工具时，如果终端通过 WSL 连接，文件会被 WSL 启动 banner 的 UTF-16 null 字节污染。解决方法：通过 Git Bash 写入，或使用 Python 脚本写入。</p>
+
+            <h3>2. Vitis HLS 路径空格问题</h3>
+            <p>默认安装路径 <code>C:\Program Files\Xilinx</code> 有空格。建议安装到 <code>D:\Programs\Xilinx</code> 避免引号转义问题。</p>
+
+            <h3>3. Git for Windows 的路径分隔符</h3>
+            <p>Git Bash 中应使用正斜杠 <code>/</code> 替代反斜杠 <code>\</code>。例如：<code>D:/Programs/Xilinx/2025.2/Vivado/bin/vivado</code></p>
+
+            <h2>推荐配置</h2>
+            <p>在 <code>~/.bashrc</code> 中加入：</p>
+            <pre><code># Vitis/Vivado
+export XILINX_HLS="D:/Programs/Xilinx/2025.2/Vitis_HLS"
+export PATH="$XILINX_HLS/bin:$PATH"
+
+# Git Bash override
+export HERMES_GIT_BASH_PATH="D:/Programs/Git/bin/bash.exe"</code></pre>
+          </div>
+
+          <nav class="article-pager">
+            <a class="pager-link" href="llm4hls-intro.html">上一篇</a>
+            <a class="pager-link" href="../index.html">回到首页</a>
+            <a class="pager-link" href="fpt26-progress.html">下一篇</a>
+          </nav>
+        </article>
+      </main>
+
+      <aside class="sidebar">
+        <div class="sidebar-card">
+          <h2 class="sidebar-title">目录</h2>
+          <nav style="font-size:0.88rem;">
+            <p style="color:var(--ink-faint);font-size:0.82rem;">滚动阅读</p>
+          </nav>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <span>&copy; 2026 Mufire-star</span>
+        <span>Powered by GitHub Pages</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

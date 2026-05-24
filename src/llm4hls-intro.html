@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM4HLS 入门 · Mufire-star</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="viewport">
+    <header class="site-header">
+      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
+      <nav class="main-nav">
+        <a href="../index.html" class="nav-link">首页</a>
+        <a href="../tags/index.html" class="nav-link">标签</a>
+        <a href="../categories/index.html" class="nav-link">分类</a>
+        <a href="../about/index.html" class="nav-link">关于</a>
+      </nav>
+    </header>
+
+    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-硬件加速">硬件加速</a> / LLM4HLS 入门</p>
+
+    <div class="main-grid">
+      <main class="main-content">
+        <article>
+          <header class="article-header">
+            <div class="article-meta">
+              <span class="meta-pill meta-date">2026-05-20</span>
+              <a href="../categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
+              <a href="../tags/index.html#tag-LLM" class="meta-pill">#LLM</a>
+              <a href="../tags/index.html#tag-HLS" class="meta-pill">#HLS</a>
+              <a href="../tags/index.html#tag-FPGA" class="meta-pill">#FPGA</a>
+            </div>
+            <h1>LLM4HLS 入门：用大语言模型辅助高层次综合</h1>
+          </header>
+
+          <div class="article-body">
+            <p>FPT'26 Design Competition Track A 项目笔记 (ฅ^u u^ฅ)</p>
+
+            <h2>背景</h2>
+            <p>高层次综合（HLS）可以将 C/C++ 代码自动转换成 RTL（Verilog/VHDL），极大提高了 FPGA 开发的效率。然而，HLS 工具对代码风格有严格要求，写出来的代码性能也可能远不如手写 RTL。</p>
+            <p>LLM4HLS 的思路是用大语言模型作为 Agent，自动生成符合 HLS 风格要求的 C/C++ 代码，甚至自动添加优化 pragma，从而降低 FPGA 开发的门槛。</p>
+
+            <h2>项目架构</h2>
+            <p>我们的工作流分为六个阶段：</p>
+            <ol>
+              <li><strong>需求解析</strong> —— 将自然语言描述的功能需求转换成结构化规范</li>
+              <li><strong>代码生成</strong> —— 使用 DeepSeek API 生成 Vitis HLS 兼容的 C++ 代码</li>
+              <li><strong>RAG 增强</strong> —— 基于 HLS 模式库（7 种常见模式）进行检索增强生成</li>
+              <li><strong>编译验证</strong> —— 自动调用 Vitis HLS 进行综合和仿真</li>
+              <li><strong>反馈循环</strong> —— 根据编译错误自动修正代码</li>
+              <li><strong>性能评估</strong> —— 对比生成的 RTL 与手写 RTL 的时序和资源</li>
+            </ol>
+
+            <h2>关键技术点</h2>
+
+            <h3>RAG 模式库</h3>
+            <p>我们整理了 7 种常见的 HLS 加速模式：</p>
+            <ul>
+              <li>流水线（Pipeline）</li>
+              <li>数组分区（Array Partition）</li>
+              <li>数据流（Dataflow）</li>
+              <li>循环展开（Loop Unroll）</li>
+              <li>内联函数（Function Inline）</li>
+              <li>接口综合（Interface Synthesis）</li>
+              <li>内存重组（Memory Reorg）</li>
+            </ul>
+
+            <h3>DeepSeek API 配置</h3>
+            <p>使用本地代理 <code>127.0.0.1:7897</code> 访问 DeepSeek API。较长的上下文窗口（128K tokens）对于处理 HLS 编译器的完整输出非常有帮助。</p>
+
+            <h2>初步结果</h2>
+            <p>在简单的矩阵乘法测试中，LLM 生成的代码在时序上已接近手写 RTL 水平（2.2M cycles vs 2.33M），但由于运行时 <code>sqrtf()</code> 不是编译期常量，时序为 25.7ns（手写 5ns），还有优化空间。</p>
+
+            <p>后续将继续优化提示词和 RAG 检索策略，争取在 FPT'26 竞赛截止前提交更好的结果。</p>
+          </div>
+
+          <nav class="article-pager">
+            <a class="pager-link" href="hello-world.html">上一篇</a>
+            <a class="pager-link" href="../index.html">回到首页</a>
+            <a class="pager-link" href="vivado-tips.html">下一篇</a>
+          </nav>
+        </article>
+      </main>
+
+      <aside class="sidebar">
+        <div class="sidebar-card">
+          <h2 class="sidebar-title">目录</h2>
+          <nav style="font-size:0.88rem;">
+            <p style="color:var(--ink-faint);font-size:0.82rem;">滚动阅读</p>
+          </nav>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <span>&copy; 2026 Mufire-star</span>
+        <span>Powered by GitHub Pages</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

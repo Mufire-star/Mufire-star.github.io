@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>其他项目：CNN-DVS & RISC-V CPU & PCB · Mufire-star</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="viewport">
+    <header class="site-header">
+      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
+      <nav class="main-nav">
+        <a href="../index.html" class="nav-link">首页</a>
+        <a href="../tags/index.html" class="nav-link">标签</a>
+        <a href="../categories/index.html" class="nav-link">分类</a>
+        <a href="../about/index.html" class="nav-link">关于</a>
+      </nav>
+    </header>
+
+    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-芯片设计">芯片设计</a> / 其他项目</p>
+
+    <div class="main-grid">
+      <main class="main-content">
+        <article>
+          <header class="article-header">
+            <div class="article-meta">
+              <span class="meta-pill meta-date">2026-05-06</span>
+              <a href="../categories/index.html#category-芯片设计" class="meta-pill">芯片设计</a>
+              <a href="../categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
+              <a href="../categories/index.html#category-嵌入式" class="meta-pill">嵌入式</a>
+              <a href="../tags/index.html#tag-RISC-V" class="meta-pill">#RISC-V</a>
+              <a href="../tags/index.html#tag-CNN" class="meta-pill">#CNN</a>
+              <a href="../tags/index.html#tag-KiCad" class="meta-pill">#KiCad</a>
+            </div>
+            <h1>其他项目合集：CNN-DVS · RISC-V CPU · KiCad 测试板</h1>
+          </header>
+
+          <div class="article-body">
+
+            <h2>一、CNN-DVS：红外图像 Tiny YOLO 目标检测</h2>
+            <p><strong>项目路径</strong>：<code>D:\Projects\cnn_dvs</code></p>
+            <p>在红外图像流上训练一个小型 YOLO 类 CNN。只使用 <code>udp</code> 红外图像流（忽略 combine 和 usb 图像）。</p>
+
+            <h3>数据集结构</h3>
+            <pre><code>dataset/
+├── train/.../udp/0.png
+├── val/.../udp/0.png
+├── test/.../udp/0.png
+└── label/0.txt  (YOLO 格式)</code></pre>
+
+            <h3>实验配置</h3>
+            <ul>
+              <li>对比实验配置（YAML）：fused vs half precision、udp3 vs usb1 数据源</li>
+              <li>消融实验：dataset_udp_highacc.yaml、dataset_udp_map50_finetune.yaml</li>
+              <li>融合 YOLO 实验：fused_yolo.yaml</li>
+              <li>半精度训练对比：sbalanced_fused_half_r1.yaml</li>
+            </ul>
+
+            <hr>
+
+            <h2>二、CNN-FINN：Xilinx FINN 框架探索</h2>
+            <p><strong>项目路径</strong>：<code>D:\Projects\cnn_finn</code></p>
+            <p>Xilinx FINN 框架的本地部署和实验。FINN 是一个用于在 FPGA 上部署量化神经网络的框架，支持从训练到部署的端到端流程。</p>
+            <ul>
+              <li>包含 FINN 官方仓库的全部源码（finn/ 子目录）</li>
+              <li>Docker 构建脚本（run-docker.sh）</li>
+              <li>自定义 HLS 组件（custom_hls/）</li>
+              <li>FINN 运行时库（finn-rtllib/）</li>
+            </ul>
+
+            <hr>
+
+            <h2>三、RISC-V CPU 设计</h2>
+            <p><strong>项目路径</strong>：<code>D:\Projects\riscv_cpu_design</code></p>
+            <p>一个简单的单周期 RISC-V CPU，用 Verilog 实现，包含完整的指令集执行单元。</p>
+
+            <h3>模块列表</h3>
+            <ul>
+              <li><strong>PC</strong>：程序计数器</li>
+              <li><strong>IM</strong>：指令存储器</li>
+              <li><strong>IR</strong>：指令寄存器</li>
+              <li><strong>RF</strong>：寄存器堆</li>
+              <li><strong>ALU</strong>：算术逻辑单元</li>
+              <li><strong>EXT</strong>：立即数扩展</li>
+              <li><strong>DM</strong>：数据存储器</li>
+              <li><strong>ControlUnit</strong>：控制单元</li>
+              <li><strong>NPC</strong>：下一条 PC 计算</li>
+              <li><strong>MUX_2to1/3to1</strong>：多路选择器</li>
+              <li><strong>Flopr</strong>：寄存器（带复位）</li>
+            </ul>
+            <p>包含 UVM 验证环境和波形仿真脚本。</p>
+
+            <hr>
+
+            <h2>四、KiCad 测试板设计</h2>
+            <p><strong>项目路径</strong>：<code>D:\Projects\test_board</code></p>
+            <p>使用 KiCad 设计的 PCB 测试板，包含原理图和 PCB 布局。用于硬件调试和功能验证。</p>
+            <ul>
+              <li>KiCad PCB 工程文件（test_board.kicad_pro / .kicad_pcb / .kicad_sch）</li>
+              <li>多版本迭代（test_board_fixed / kicad10 / kicad6）</li>
+              <li>备份文件（test_board-backups/）</li>
+            </ul>
+          </div>
+
+          <nav class="article-pager">
+            <a class="pager-link" href="ai-tools-workspace.html">上一篇</a>
+            <a class="pager-link" href="../index.html">回到首页</a>
+            <span class="pager-link is-disabled">下一篇</span>
+          </nav>
+        </article>
+      </main>
+
+      <aside class="sidebar">
+        <div class="sidebar-card">
+          <h2 class="sidebar-title">目录</h2>
+          <nav style="font-size:0.88rem;">
+            <p style="color:var(--ink-faint);font-size:0.82rem;">滚动阅读</p>
+          </nav>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <span>&copy; 2026 Mufire-star</span>
+        <span>Powered by GitHub Pages</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

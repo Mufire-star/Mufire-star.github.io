@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>硅迹开源：全开源芯片设计链路 · Mufire-star</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="viewport">
+    <header class="site-header">
+      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
+      <nav class="main-nav">
+        <a href="../index.html" class="nav-link">首页</a>
+        <a href="../tags/index.html" class="nav-link">标签</a>
+        <a href="../categories/index.html" class="nav-link">分类</a>
+        <a href="../about/index.html" class="nav-link">关于</a>
+      </nav>
+    </header>
+
+    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-芯片设计">芯片设计</a> / 硅迹开源</p>
+
+    <div class="main-grid">
+      <main class="main-content">
+        <article>
+          <header class="article-header">
+            <div class="article-meta">
+              <span class="meta-pill meta-date">2026-05-14</span>
+              <a href="../categories/index.html#category-芯片设计" class="meta-pill">芯片设计</a>
+              <a href="../tags/index.html#tag-开源EDA" class="meta-pill">#开源EDA</a>
+              <a href="../tags/index.html#tag-SKY130" class="meta-pill">#SKY130</a>
+              <a href="../tags/index.html#tag-RISC-V" class="meta-pill">#RISC-V</a>
+              <a href="../tags/index.html#tag-Yosys" class="meta-pill">#Yosys</a>
+            </div>
+            <h1>硅迹开源 (SiliconTrace Open)：全开源数字 IC 设计链路</h1>
+          </header>
+
+          <div class="article-body">
+            <p><strong>项目地址</strong>：<code>D:\Projects\SiliconTrace_Open</code></p>
+
+            <h2>项目概述</h2>
+            <p>一个由在校大学生独立发起的 <strong>"全开源数字 IC 设计工作室（One-Person Studio）"</strong>。目标是验证：不依赖任何商业 EDA 软件授权，仅凭开源工具和一台电脑，能否走完从芯片设计到板级验证的完整链路。</p>
+
+            <h2>技术栈</h2>
+            <table>
+              <thead><tr><th>环节</th><th>工具</th><th>状态</th></tr></thead>
+              <tbody>
+                <tr><td>RTL 设计</td><td>Verilog HDL</td><td>已完成</td></tr>
+                <tr><td>逻辑综合</td><td>Yosys</td><td>已配置</td></tr>
+                <tr><td>物理后端</td><td>iEDA（国产开源）</td><td>已安装</td></tr>
+                <tr><td>工艺库</td><td>SKY130 PDK</td><td>已配置</td></tr>
+                <tr><td>时序分析</td><td>OpenSTA / iEDA</td><td>已配置</td></tr>
+                <tr><td>PCB 设计</td><td>KiCad</td><td>水平测试板已设计</td></tr>
+                <tr><td>验证</td><td>自研测试程序</td><td>规划中</td></tr>
+              </tbody>
+            </table>
+
+            <h2>核心流程</h2>
+            <h3>数字线</h3>
+            <p>Verilog RTL → Yosys 综合 → iEDA 布局布线/STA → SKY130 Sign-off → GDSII</p>
+
+            <h3>系统线</h3>
+            <p>芯片设计阶段同步启动 KiCad 测试载板规划（引脚分配、电源架构、高速拓扑）</p>
+
+            <h3>验证线</h3>
+            <p>回片后使用自制测试板 + 自研测试程序完成 Bring-up，输出测试报告</p>
+
+            <h2>当前进展</h2>
+            <ul>
+              <li>WSL2 Ubuntu 22.04 环境已搭建</li>
+              <li>Yosys 已安装，RTL 综合已验证</li>
+              <li>iEDA 已编译安装</li>
+              <li>系统依赖已安装（build-essential, clang, bison, flex, python3, cmake 等）</li>
+              <li>KiCad 测试载板设计进行中</li>
+              <li>自动化脚本库（Python/Tcl 打通 Yosys↔iEDA 数据交换）开发中</li>
+            </ul>
+
+            <h2>项目意义</h2>
+            <p>硅迹开源的目标不只是"生成一个 GDSII"，而是"这颗芯片在我自己设计的板子上能不能跑起来"。核心理念是：<strong>不以单一环节（IC/PCB）作为交付物，而是以一颗在自己设计的板子上跑通了的芯片作为唯一交付标准。</strong></p>
+
+            <p>相比商业 EDA 的高昂授权费（华大九天等对高校学生存在授权门槛），以及开源社区缺少"最后一公里"（芯片 Bring-up 和测试载板设计）的现状，这个项目试图填补从开源 EDA 到真实可运行芯片之间的空白。</p>
+
+            <h2>后续计划</h2>
+            <ul>
+              <li>完成 iEDA 全流程跑通（布局布线 + STA 签核）</li>
+              <li>在 SKY130 工艺下完成一次完整 GDSII 输出</li>
+              <li>设计并打样 KiCad 测试载板</li>
+              <li>申请 Open MPW 流片</li>
+              <li>开源全流程自动化脚本库</li>
+            </ul>
+          </div>
+
+          <nav class="article-pager">
+            <a class="pager-link" href="gcnn-dvs-fpga.html">上一篇</a>
+            <a class="pager-link" href="../index.html">回到首页</a>
+            <a class="pager-link" href="k1-rvv-env.html">下一篇</a>
+          </nav>
+        </article>
+      </main>
+
+      <aside class="sidebar">
+        <div class="sidebar-card">
+          <h2 class="sidebar-title">目录</h2>
+          <nav style="font-size:0.88rem;">
+            <p style="color:var(--ink-faint);font-size:0.82rem;">滚动阅读</p>
+          </nav>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <span>&copy; 2026 Mufire-star</span>
+        <span>Powered by GitHub Pages</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
