@@ -397,6 +397,8 @@ body::before {
   color: var(--accent);
   text-decoration: none;
 }
+
+/* ---- 文章页 ---- */
 .article-header {
   margin-bottom: 24px;
 }

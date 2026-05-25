@@ -1,136 +1,135 @@
-     1|     1|     1|<!DOCTYPE html>
-     2|     2|     2|<html lang="zh-CN">
-     3|     3|     3|<head>
-     4|     4|     4|  <meta charset="UTF-8">
-     5|     5|     5|  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6|     6|     6|  <title>K1 RVV 加速 & SNN-STDP FPGA · Mufire-star</title>
-     7|     7|     7|  <link rel="preconnect" href="https://fonts.googleapis.com">
-     8|     8|     8|  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     9|     9|     9|  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    10|    10|    10|  <link rel="stylesheet" href="../css/style.css">
-    11|    11|    11|</head>
-    12|    12|    12|<body>
-    13|    13|    13|  <div class="viewport">
-    14|    14|    14|    <header class="site-header">
-    15|    15|    15|      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
-    16|    16|    16|      <nav class="main-nav">
-    17|    17|    17|        <a href="../index.html" class="nav-link">首页</a>
-    18|    18|    18|        <a href="../tags/index.html" class="nav-link">标签</a>
-    19|    19|    19|        <a href="../categories/index.html" class="nav-link">分类</a>
-    20|    20|    20|        <a href="../about/index.html" class="nav-link">关于</a>
-    21|    21|    21|      </nav>
-    22|    22|    22|    </header>
-    23|    23|    23|
-    24|    24|    24|    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-嵌入式">嵌入式</a> / K1 RVV &amp; SNN-STDP</p>
-    25|    25|    25|
-    26|    26|    26|    <div class="main-grid">
-    27|    27|    27|      <main class="main-content">
-    28|    28|    28|        <article>
-    29|    29|    29|          <header class="article-header">
-    30|    30|    30|            <div class="article-meta">
-    31|    31|    31|              <span class="meta-pill meta-date">2026-05-10</span>
-    32|    32|    32|              <a href="../categories/index.html#category-嵌入式" class="meta-pill">嵌入式</a>
-    33|    33|    33|              <a href="../categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
-    34|    34|    34|              <a href="../tags/index.html#tag-C" class="meta-pill">#C</a>
-    35|    35|    35|              <a href="../tags/index.html#tag-C++" class="meta-pill">#C++</a>
-    36|    36|    36|              <a href="../tags/index.html#tag-Python" class="meta-pill">#Python</a>
-    37|    37|    37|              <a href="../tags/index.html#tag-CMake" class="meta-pill">#CMake</a>
-    38|    38|    38|            </div>
-    39|    39|    39|            <h1>K1 RVV 加速 &amp; SNN-STDP FPGA 实现总结</h1>
-    40|    40|    40|          </header>
-    41|    41|    41|
-    42|    42|    42|          <div class="article-body">
-    43|    43|    43|
-    44|    44|    44|            <h2 id="k1-rvv">一、K1 RVV 双电机同步监测系统</h2>
-    45|    45|    45|            <p><strong>项目路径</strong>：<code>D:\Projects\K1_RVV</code></p>
-    46|    46|    46|            <p>面向 <strong>MUSE Pi K1</strong>（SpacemiT K1 RISC-V 处理器）的双电机同步监测工程。</p>
-    47|    47|    47|
-    48|    48|    48|            <h3 id="k1-current">当前实现</h3>
-    49|    49|    49|            <ul>
-    50|    50|    50|              <li><strong>C 语言音频分析核心</strong>，使用 RVV 向量扩展加速热点计算</li>
-    51|    51|    51|              <li><strong>CLI 分析入口</strong>：支持离线 WAV 文件和 ALSA 实时音频</li>
-    52|    52|    52|              <li><strong>scalar / rvv 对照 benchmark</strong>：对比标量和向量化加速效果</li>
-    53|    53|    53|              <li><strong>Python 网页服务</strong>：K1 端运行，浏览器可查看实时数据</li>
-    54|    54|    54|              <li><strong>完整基础链路</strong>：上板运行 + 浏览器查看 + 公开数据演示</li>
-    55|    55|    55|            </ul>
-    56|    56|    56|
-    57|    57|    57|            <h3 id="k1-structure">项目结构</h3>
-    58|    58|    58|            <pre><code>K1_RVV/
-    59|    59|    59|├── benchmarks/     # scalar / rvv 对照测试
-    60|    60|    60|├── build/          # 编译产物
-    61|    61|    61|├── configs/        # 配置文件
-    62|    62|    62|├── data/           # 测试数据
-    63|    63|    63|├── docs/           # 项目文档 + 演示指南
-    64|    64|    64|└── k1_web/         # 浏览器查看页面</code></pre>
-    65|    65|    65|
-    66|    66|    66|            <h3 id="k1-todo">待完成</h3>
-    67|    67|    67|            <ul>
-    68|    68|    68|              <li>STM32 控制闭环</li>
-    69|    69|    69|              <li>MA-USB8 真实波束控制</li>
-    70|    70|    70|              <li>全通道麦克风独立频谱展示</li>
-    71|    71|    71|            </ul>
-    72|    72|    72|
-    73|    73|    73|            <hr>
-    74|    74|    74|
-    75|    75|    75|            <h2 id="k1-agent">二、K1 AI Agent</h2>
-    76|    76|    76|            <p><strong>项目路径</strong>：<code>D:\Projects\K1_ai_agent</code></p>
-    77|    77|    77|            <p>K1 板上的 AI 代理项目，包含 agent 调度逻辑和 SSH 远程管理功能，在 MUSE Pi K1 上运行轻量级 AI 任务。</p>
-    78|    78|    78|
-    79|    79|    79|            <hr>
-    80|    80|    80|
-    81|    81|    81|            <h2 id="snn-stdp">三、SNN-STDP 脉冲神经网络 FPGA 实现</h2>
-    82|    82|    82|            <p><strong>项目路径</strong>：<code>D:\Projects\SNN-STDP</code></p>
-    83|    83|    83|            <p>在 ZCU104 上实现基于 <strong>STDP（Spike-Timing-Dependent Plasticity）</strong> 学习规则的脉冲神经网络硬件加速。</p>
-    84|    84|    84|
-    85|    85|    85|            <h3 id="snn-status">当前状态</h3>
-    86|    86|    86|            <ul>
-    87|    87|    87|              <li>Vitis HLS 综合已进行，部分模块通过综合</li>
-    88|    88|    88|              <li>板级测试已进行 DFX Runtime Profile：CPU 0:0:1 / WALL 0:0:0</li>
-    89|    89|    89|              <li>生成测试数据：<code>board_scores_current82.json</code>（82 个样本的评估分数）</li>
-    90|    90|    90|              <li>权重文件：<code>board_stdp_weights_last.npz</code></li>
-    91|    91|    91|            </ul>
-    92|    92|    92|
-    93|    93|    93|            <h3 id="snn-details">技术细节</h3>
-    94|    94|    94|            <ul>
-    95|    95|    95|              <li>使用 Vitis HLS 进行 C++ 到 RTL 的综合</li>
-    96|    96|    96|              <li>STDP 学习规则硬件化，支持片上在线学习</li>
-    97|    97|    97|              <li>与 GCNN-DVS 项目共享 ZCU104 硬件平台</li>
-    98|    98|    98|              <li>PYNQ 框架用于 PS-PL 通信和结果读取</li>
-    99|    99|    99|            </ul>
-   100|   100|   100|          </div>
-   101|   101|   101|
-   102|   102|   102|          <nav class="article-pager">
-   103|   103|   103|            <a class="pager-link" href="silicon-trace-open.html">上一篇</a>
-   104|   104|   104|            <a class="pager-link" href="../index.html">回到首页</a>
-   105|   105|   105|            <a class="pager-link" href="ai-tools-workspace.html">下一篇</a>
-   106|   106|   106|          </nav>
-   107|   107|   107|        </article>
-   108|   108|   108|      </main>
-   109|   109|   109|
-   110|   110|      <aside class="sidebar">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K1 RVV 加速 & SNN-STDP FPGA · Mufire-star</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="viewport">
+    <header class="site-header">
+      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
+      <nav class="main-nav">
+        <a href="../index.html" class="nav-link">首页</a>
+        <a href="../tags/index.html" class="nav-link">标签</a>
+        <a href="../categories/index.html" class="nav-link">分类</a>
+        <a href="../about/index.html" class="nav-link">关于</a>
+      </nav>
+    </header>
+
+    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-嵌入式">嵌入式</a> / K1 RVV &amp; SNN-STDP</p>
+
+    <div class="main-grid">
+      <main class="main-content">
+        <article>
+          <header class="article-header">
+            <div class="article-meta">
+              <span class="meta-pill meta-date">2026-05-10</span>
+              <a href="../categories/index.html#category-嵌入式" class="meta-pill">嵌入式</a>
+              <a href="../categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
+              <a href="../tags/index.html#tag-C" class="meta-pill">#C</a>
+              <a href="../tags/index.html#tag-C++" class="meta-pill">#C++</a>
+              <a href="../tags/index.html#tag-Python" class="meta-pill">#Python</a>
+              <a href="../tags/index.html#tag-CMake" class="meta-pill">#CMake</a>
+            </div>
+            <h1>K1 RVV 加速 &amp; SNN-STDP FPGA 实现总结</h1>
+          </header>
+
+          <div class="article-body">
+
+            <h2 id="一-k1-rvv-双电机同步监测系统">一、K1 RVV 双电机同步监测系统</h2>
+            <p><strong>项目路径</strong>：<code>D:\Projects\K1_RVV</code></p>
+            <p>面向 <strong>MUSE Pi K1</strong>（SpacemiT K1 RISC-V 处理器）的双电机同步监测工程。</p>
+
+            <h3 id="当前实现">当前实现</h3>
+            <ul>
+              <li><strong>C 语言音频分析核心</strong>，使用 RVV 向量扩展加速热点计算</li>
+              <li><strong>CLI 分析入口</strong>：支持离线 WAV 文件和 ALSA 实时音频</li>
+              <li><strong>scalar / rvv 对照 benchmark</strong>：对比标量和向量化加速效果</li>
+              <li><strong>Python 网页服务</strong>：K1 端运行，浏览器可查看实时数据</li>
+              <li><strong>完整基础链路</strong>：上板运行 + 浏览器查看 + 公开数据演示</li>
+            </ul>
+
+            <h3 id="项目结构">项目结构</h3>
+            <pre><code>K1_RVV/
+├── benchmarks/     # scalar / rvv 对照测试
+├── build/          # 编译产物
+├── configs/        # 配置文件
+├── data/           # 测试数据
+├── docs/           # 项目文档 + 演示指南
+└── k1_web/         # 浏览器查看页面</code></pre>
+
+            <h3 id="待完成">待完成</h3>
+            <ul>
+              <li>STM32 控制闭环</li>
+              <li>MA-USB8 真实波束控制</li>
+              <li>全通道麦克风独立频谱展示</li>
+            </ul>
+
+            <hr>
+
+            <h2 id="二-k1-ai-agent">二、K1 AI Agent</h2>
+            <p><strong>项目路径</strong>：<code>D:\Projects\K1_ai_agent</code></p>
+            <p>K1 板上的 AI 代理项目，包含 agent 调度逻辑和 SSH 远程管理功能，在 MUSE Pi K1 上运行轻量级 AI 任务。</p>
+
+            <hr>
+
+            <h2 id="三-snn-stdp-脉冲神经网络-fpga-实现">三、SNN-STDP 脉冲神经网络 FPGA 实现</h2>
+            <p><strong>项目路径</strong>：<code>D:\Projects\SNN-STDP</code></p>
+            <p>在 ZCU104 上实现基于 <strong>STDP（Spike-Timing-Dependent Plasticity）</strong> 学习规则的脉冲神经网络硬件加速。</p>
+
+            <h3 id="当前状态">当前状态</h3>
+            <ul>
+              <li>Vitis HLS 综合已进行，部分模块通过综合</li>
+              <li>板级测试已进行 DFX Runtime Profile：CPU 0:0:1 / WALL 0:0:0</li>
+              <li>生成测试数据：<code>board_scores_current82.json</code>（82 个样本的评估分数）</li>
+              <li>权重文件：<code>board_stdp_weights_last.npz</code></li>
+            </ul>
+
+            <h3 id="技术细节">技术细节</h3>
+            <ul>
+              <li>使用 Vitis HLS 进行 C++ 到 RTL 的综合</li>
+              <li>STDP 学习规则硬件化，支持片上在线学习</li>
+              <li>与 GCNN-DVS 项目共享 ZCU104 硬件平台</li>
+              <li>PYNQ 框架用于 PS-PL 通信和结果读取</li>
+            </ul>
+          </div>
+
+          <nav class="article-pager">
+            <a class="pager-link" href="silicon-trace-open.html">上一篇</a>
+            <a class="pager-link" href="../index.html">回到首页</a>
+            <a class="pager-link" href="ai-tools-workspace.html">下一篇</a>
+          </nav>
+        </article>
+      </main>
+
+      <aside class="sidebar">
         <div class="sidebar-card">
           <h2 class="sidebar-title">目录</h2>
           <nav style="font-size:0.85rem;line-height:1.8;">
-            <a href="#k1-rvv" class="toc-h2">一、K1 RVV 双电机同步监测系统
-            <a href="#k1-current" class="toc-h3">当前实现
-            <a href="#k1-structure" class="toc-h3">项目结构
-            <a href="#k1-todo" class="toc-h3">待完成
-            <a href="#k1-agent" class="toc-h2">二、K1 AI Agent
-            <a href="#snn-stdp" class="toc-h2">三、SNN-STDP 脉冲神经网络 FPGA 实现
-            <a href="#snn-status" class="toc-h3">当前状态
-            <a href="#snn-details" class="toc-h3">技术细节
+            <a href="#一-k1-rvv-双电机同步监测系统" class="toc-h2">一、K1 RVV 双电机同步监测系统</a>
+            <a href="#当前实现" class="toc-h3">当前实现</a>
+            <a href="#项目结构" class="toc-h3">项目结构</a>
+            <a href="#待完成" class="toc-h3">待完成</a>
+            <a href="#二-k1-ai-agent" class="toc-h2">二、K1 AI Agent</a>
+            <a href="#三-snn-stdp-脉冲神经网络-fpga-实现" class="toc-h2">三、SNN-STDP 脉冲神经网络 FPGA 实现</a>
+            <a href="#当前状态" class="toc-h3">当前状态</a>
+            <a href="#技术细节" class="toc-h3">技术细节</a>
           </nav>
         </div>
       </aside>
-   125|   125|   118|    </div>
-   126|   126|   119|
-   127|   127|   120|    <footer class="site-footer">
-   128|   128|   121|      <div class="site-footer-inner">
-   129|   129|   122|        <span>&copy; 2026 Mufire-star</span>
-   130|   130|   123|        <span>Powered by GitHub Pages</span>
-   131|   131|   124|      </div>
-   132|   132|   125|    </footer>
-   133|   133|   126|  </div>
-   134|   134|   127|</body>
-   135|   135|   128|</html>
-   136|   136|   129|
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <span>&copy; 2026 Mufire-star</span>
+        <span>Powered by GitHub Pages</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
