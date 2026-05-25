@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>未公开仓库笔记 · Mufire-star</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="viewport">
+    <header class="site-header">
+      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
+      <nav class="main-nav">
+        <a href="../index.html" class="nav-link">首页</a>
+        <a href="../tags/index.html" class="nav-link">标签</a>
+        <a href="../categories/index.html" class="nav-link">分类</a>
+        <a href="../about/index.html" class="nav-link">关于</a>
+      </nav>
+    </header>
+
+    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="index.html">私有笔记</a> / 未公开仓库笔记</p>
+
+    <div class="main-grid">
+      <main class="main-content">
+        <article>
+          <header class="article-header">
+            <div class="article-meta">
+              <span class="meta-pill meta-date" style="background:var(--accent-soft);color:var(--accent);">🔒 私有</span>
+            </div>
+            <h1>未公开仓库笔记</h1>
+          </header>
+
+          <div class="article-body">
+            <p>此页面存放私有/未公开项目的技术笔记，通过密码保护访问。</p>
+            <p>在这里可以记录不便公开的内容，比如：</p>
+            <ul>
+              <li>私有仓库的架构设计</li>
+              <li>未公开项目的踩坑记录</li>
+              <li>敏感的配置信息（注意不要上传真实密钥）</li>
+              <li>内部实验数据</li>
+            </ul>
+
+            <blockquote>
+              提示：虽然加了密码锁，但内容仍然是明文存储在 HTML 中的。
+              如果需要真正安全的加密，建议使用 GPG 或其他加密工具。
+            </blockquote>
+
+            <h2>待记录</h2>
+            <ul>
+              <li>...</li>
+            </ul>
+          </div>
+
+          <nav class="article-pager">
+            <a class="pager-link" href="index.html">回到笔记列表</a>
+          </nav>
+        </article>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <span>&copy; 2026 Mufire-star</span>
+        <span>Powered by GitHub Pages</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // 直接访问此页面时也检查密码状态
+    if (sessionStorage.getItem('private_unlocked') !== 'true') {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

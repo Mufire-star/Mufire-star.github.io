@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>私有笔记 · Mufire-star</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .lock-screen {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .lock-screen h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .lock-screen p {
+      color: var(--ink-soft);
+      margin-bottom: 24px;
+    }
+    .lock-input {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .lock-input input {
+      padding: 10px 16px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: var(--font-sans);
+      background: var(--paper);
+      color: var(--ink);
+      outline: none;
+      width: 220px;
+      transition: border-color var(--transition);
+    }
+    .lock-input input:focus {
+      border-color: var(--accent);
+    }
+    .lock-input button {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent);
+      color: white;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+    .lock-input button:hover {
+      background: #4338ca;
+    }
+    .lock-error {
+      color: #dc2626;
+      font-size: 0.88rem;
+      margin-top: 12px;
+      min-height: 1.5em;
+    }
+    .private-content {
+      display: none;
+    }
+    .private-content.is-unlocked {
+      display: block;
+    }
+    .private-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .private-list a {
+      display: block;
+      padding: 12px 16px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      color: var(--ink);
+      font-weight: 500;
+      transition: all var(--transition);
+    }
+    .private-list a:hover {
+      border-color: var(--accent-soft);
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      color: var(--accent);
+    }
+    .private-list a small {
+      display: block;
+      font-weight: 400;
+      font-size: 0.82rem;
+      color: var(--ink-faint);
+      margin-top: 2px;
+    }
+    @media (max-width: 480px) {
+      .lock-input input { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="viewport">
+    <header class="site-header">
+      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
+      <nav class="main-nav">
+        <a href="../index.html" class="nav-link">首页</a>
+        <a href="../tags/index.html" class="nav-link">标签</a>
+        <a href="../categories/index.html" class="nav-link">分类</a>
+        <a href="../about/index.html" class="nav-link">关于</a>
+      </nav>
+    </header>
+
+    <div class="main-grid">
+      <main class="main-content">
+
+        <!-- 密码锁 -->
+        <div class="lock-screen" id="lockScreen">
+          <h1>🔒 私有笔记</h1>
+          <p>输入密码解锁未公开的笔记内容</p>
+          <div class="lock-input">
+            <input type="password" id="passwordInput" placeholder="请输入密码" onkeydown="if(event.key==='Enter')checkPass()">
+            <button onclick="checkPass()">解锁</button>
+          </div>
+          <div class="lock-error" id="lockError"></div>
+        </div>
+
+        <!-- 解锁后的内容 -->
+        <div class="private-content" id="privateContent">
+          <div class="section-heading">
+            <h1 class="section-title" style="font-size:1.4rem;">私有笔记</h1>
+            <span class="section-count">🔓 已解锁</span>
+          </div>
+
+          <div class="private-list">
+            <a href="repo-notes.html">
+              未公开仓库笔记
+              <small>私有项目的技术笔记和踩坑记录</small>
+            </a>
+            <!-- 后续可继续添加 -->
+          </div>
+
+          <p style="margin-top:20px;font-size:0.85rem;color:var(--ink-faint);">
+            关闭页面后自动锁定 · 如需修改密码请编辑 private/index.html
+          </p>
+        </div>
+
+      </main>
+
+      <aside class="sidebar">
+        <div class="sidebar-card">
+          <h2 class="sidebar-title">提示</h2>
+          <p style="font-size:0.82rem;color:var(--ink-soft);line-height:1.6;">
+            此页面不在公共导航中显示<br>
+            需要密码才能访问内容
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <span>&copy; 2026 Mufire-star</span>
+        <span>Powered by GitHub Pages</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // ========== 密码配置 ==========
+    // 修改下面的密码为你想要的
+    var CORRECT_PASSWORD = "mufire2026";
+
+    function checkPass() {
+      var input = document.getElementById('passwordInput');
+      var error = document.getElementById('lockError');
+      var val = input.value;
+
+      if (val === CORRECT_PASSWORD) {
+        document.getElementById('lockScreen').style.display = 'none';
+        document.getElementById('privateContent').classList.add('is-unlocked');
+        // 可选：保存到 session 避免刷新后重新输入
+        sessionStorage.setItem('private_unlocked', 'true');
+      } else {
+        error.textContent = '密码错误，请重试';
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    // 页面加载时检查 session
+    window.addEventListener('DOMContentLoaded', function() {
+      if (sessionStorage.getItem('private_unlocked') === 'true') {
+        document.getElementById('lockScreen').style.display = 'none';
+        document.getElementById('privateContent').classList.add('is-unlocked');
+      }
+    });
+
+    // 页面关闭时清除
+    window.addEventListener('beforeunload', function() {
+      sessionStorage.removeItem('private_unlocked');
+    });
+  </script>
+</body>
+</html>
