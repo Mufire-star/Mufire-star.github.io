@@ -1,114 +1,114 @@
-     1|<!DOCTYPE html>
-     2|<html lang="zh-CN">
-     3|<head>
-     4|  <meta charset="UTF-8">
-     5|  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     6|  <title>GCNN-DVS：基于事件相机的图卷积神经网络 FPGA 实现 · Mufire-star</title>
-     7|  <link rel="preconnect" href="https://fonts.googleapis.com">
-     8|  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     9|  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    10|  <link rel="stylesheet" href="../css/style.css">
-    11|</head>
-    12|<body>
-    13|  <div class="viewport">
-    14|    <header class="site-header">
-    15|      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
-    16|      <nav class="main-nav">
-    17|        <a href="../index.html" class="nav-link">首页</a>
-    18|        <a href="../tags/index.html" class="nav-link">标签</a>
-    19|        <a href="../categories/index.html" class="nav-link">分类</a>
-    20|        <a href="../about/index.html" class="nav-link">关于</a>
-    21|      </nav>
-    22|    </header>
-    23|
-    24|    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-硬件加速">硬件加速</a> / GCNN-DVS FPGA</p>
-    25|
-    26|    <div class="main-grid">
-    27|      <main class="main-content">
-    28|        <article>
-    29|          <header class="article-header">
-    30|            <div class="article-meta">
-    31|              <span class="meta-pill meta-date">2026-05-19</span>
-    32|              <a href="../categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
-    33|              <a href="../tags/index.html#tag-SystemVerilog" class="meta-pill">#SystemVerilog</a>
-    34|              <a href="../tags/index.html#tag-Python" class="meta-pill">#Python</a>
-    35|              <a href="../tags/index.html#tag-Tcl" class="meta-pill">#Tcl</a>
-    36|            </div>
-    37|            <h1>GCNN-DVS：基于事件相机的图卷积神经网络 FPGA 加速实现</h1>
-    38|          </header>
-    39|
-    40|          <div class="article-body">
-    41|            <p><strong>项目地址</strong>：<code>D:\Projects\gcnn-dvs-fpga</code>（原仓库：<a href="https://github.com/kjeziorek/gcnn-dvs-fpga" target="_blank">kjeziorek/gcnn-dvs-fpga</a>）</p>
-    42|
-    43|            <h2 id="overview">项目概述</h2>
-    44|            <p>这是第一个将 <strong>图卷积神经网络（GCNN）</strong> 用于事件相机数据处理并在 SoC FPGA 上实现硬件加速的开源项目。目标平台为 <strong>Zynq UltraScale+ MPSoC ZCU104</strong>，在 MNIST-DVS 和 N-Cars 数据集上评估分类性能。</p>
-    45|
-    46|            <h2 id="overview">硬件架构</h2>
-    47|            <p>系统包含两个主要阶段：</p>
-    48|            <ul>
-    49|              <li><strong>异步阶段</strong>（逐事件处理）：生成图结构（Event-to-Graph），并行化处理事件流</li>
-    50|              <li><strong>同步阶段</strong>（子图操作）：异步卷积 + 同步卷积的特征提取管线</li>
-    51|            </ul>
-    52|            <p>使用 SystemVerilog 开发，Vitis/Vivado 2022.2 环境。</p>
-    53|
-    54|            <h2 id="overview">部署记录</h2>
-    55|            <p>在 ZCU104 上的部署过程：</p>
-    56|            <ul>
-    57|              <li><strong>硬件接口</strong>：两个 AXI BRAM 控制器</li>
-    58|              <li><code>axi_bram_ctrl_0</code>（基地址 0xA0002000，8KB）：写入事件数据</li>
-    59|              <li><code>axi_bram_ctrl_1</code>（基地址 0xA0000000，8KB）：读取特征向量</li>
-    60|              <li><strong>中断</strong>：<code>pl_ps_irq0</code> 通知 PS 读取结果</li>
-    61|              <li><strong>PYNQ 环境</strong>：ZCU104 上已安装 PYNQ 3.0.1</li>
-    62|            </ul>
-    63|
-    64|            <h2 id="overview">通信协议</h2>
-    65|            <p>事件数据打包为 <code>(valid + 2*polarity + 4*y + 256*4*x)</code> 和 <code>timestamp</code> 两个 32 位字写入 BRAM。PS 通过中断读取 4096 个特征值，再乘以全连接层权重得到 10 类输出。</p>
-    66|
-    67|            <h2 id="overview">关键技术点</h2>
-    68|            <ul>
-    69|              <li><strong>内存初始化</strong>：权重固化在 BRAM/URAM 中（<code>tiny_conv2_param.mem</code> 等）</li>
-    70|              <li><strong>异步图生成</strong>：不用等所有事件到位，边到达边生成图</li>
-    71|              <li><strong>Vivado TCL 脚本</strong>：<code>build_project.tcl</code> 包含完整 BD 创建和综合实现设置</li>
-    72|            </ul>
-    73|
-    74|            <h2 id="overview">后续计划</h2>
-    75|            <ul>
-    76|              <li>适配 Vivado 2025.2（IP 核版本升级需要验证）</li>
-    77|              <li>编写 PYNQ Overlay Python 脚本替代裸机 C++</li>
-    78|              <li>板级实际运行 demo 验证硬件加速效果</li>
-    79|            </ul>
-    80|          </div>
-    81|
-    82|          <nav class="article-pager">
-    83|            <a class="pager-link" href="fpt26-track-a.html">上一篇</a>
-    84|            <a class="pager-link" href="../index.html">回到首页</a>
-    85|            <a class="pager-link" href="silicon-trace-open.html">下一篇</a>
-    86|          </nav>
-    87|        </article>
-    88|      </main>
-    89|
-      <aside class="sidebar">
+     1|     1|     1|<!DOCTYPE html>
+     2|     2|     2|<html lang="zh-CN">
+     3|     3|     3|<head>
+     4|     4|     4|  <meta charset="UTF-8">
+     5|     5|     5|  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|     6|     6|  <title>GCNN-DVS：基于事件相机的图卷积神经网络 FPGA 实现 · Mufire-star</title>
+     7|     7|     7|  <link rel="preconnect" href="https://fonts.googleapis.com">
+     8|     8|     8|  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     9|     9|     9|  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    10|    10|    10|  <link rel="stylesheet" href="../css/style.css">
+    11|    11|    11|</head>
+    12|    12|    12|<body>
+    13|    13|    13|  <div class="viewport">
+    14|    14|    14|    <header class="site-header">
+    15|    15|    15|      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
+    16|    16|    16|      <nav class="main-nav">
+    17|    17|    17|        <a href="../index.html" class="nav-link">首页</a>
+    18|    18|    18|        <a href="../tags/index.html" class="nav-link">标签</a>
+    19|    19|    19|        <a href="../categories/index.html" class="nav-link">分类</a>
+    20|    20|    20|        <a href="../about/index.html" class="nav-link">关于</a>
+    21|    21|    21|      </nav>
+    22|    22|    22|    </header>
+    23|    23|    23|
+    24|    24|    24|    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-硬件加速">硬件加速</a> / GCNN-DVS FPGA</p>
+    25|    25|    25|
+    26|    26|    26|    <div class="main-grid">
+    27|    27|    27|      <main class="main-content">
+    28|    28|    28|        <article>
+    29|    29|    29|          <header class="article-header">
+    30|    30|    30|            <div class="article-meta">
+    31|    31|    31|              <span class="meta-pill meta-date">2026-05-19</span>
+    32|    32|    32|              <a href="../categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
+    33|    33|    33|              <a href="../tags/index.html#tag-SystemVerilog" class="meta-pill">#SystemVerilog</a>
+    34|    34|    34|              <a href="../tags/index.html#tag-Python" class="meta-pill">#Python</a>
+    35|    35|    35|              <a href="../tags/index.html#tag-Tcl" class="meta-pill">#Tcl</a>
+    36|    36|    36|            </div>
+    37|    37|    37|            <h1>GCNN-DVS：基于事件相机的图卷积神经网络 FPGA 加速实现</h1>
+    38|    38|    38|          </header>
+    39|    39|    39|
+    40|    40|    40|          <div class="article-body">
+    41|    41|    41|            <p><strong>项目地址</strong>：<code>D:\Projects\gcnn-dvs-fpga</code>（原仓库：<a href="https://github.com/kjeziorek/gcnn-dvs-fpga" target="_blank">kjeziorek/gcnn-dvs-fpga</a>）</p>
+    42|    42|    42|
+    43|    43|    43|            <h2 id="overview">项目概述</h2>
+    44|    44|    44|            <p>这是第一个将 <strong>图卷积神经网络（GCNN）</strong> 用于事件相机数据处理并在 SoC FPGA 上实现硬件加速的开源项目。目标平台为 <strong>Zynq UltraScale+ MPSoC ZCU104</strong>，在 MNIST-DVS 和 N-Cars 数据集上评估分类性能。</p>
+    45|    45|    45|
+    46|    46|    46|            <h2 id="hardware-arch">硬件架构</h2>
+    47|    47|    47|            <p>系统包含两个主要阶段：</p>
+    48|    48|    48|            <ul>
+    49|    49|    49|              <li><strong>异步阶段</strong>（逐事件处理）：生成图结构（Event-to-Graph），并行化处理事件流</li>
+    50|    50|    50|              <li><strong>同步阶段</strong>（子图操作）：异步卷积 + 同步卷积的特征提取管线</li>
+    51|    51|    51|            </ul>
+    52|    52|    52|            <p>使用 SystemVerilog 开发，Vitis/Vivado 2022.2 环境。</p>
+    53|    53|    53|
+    54|    54|    54|            <h2 id="deployment">部署记录</h2>
+    55|    55|    55|            <p>在 ZCU104 上的部署过程：</p>
+    56|    56|    56|            <ul>
+    57|    57|    57|              <li><strong>硬件接口</strong>：两个 AXI BRAM 控制器</li>
+    58|    58|    58|              <li><code>axi_bram_ctrl_0</code>（基地址 0xA0002000，8KB）：写入事件数据</li>
+    59|    59|    59|              <li><code>axi_bram_ctrl_1</code>（基地址 0xA0000000，8KB）：读取特征向量</li>
+    60|    60|    60|              <li><strong>中断</strong>：<code>pl_ps_irq0</code> 通知 PS 读取结果</li>
+    61|    61|    61|              <li><strong>PYNQ 环境</strong>：ZCU104 上已安装 PYNQ 3.0.1</li>
+    62|    62|    62|            </ul>
+    63|    63|    63|
+    64|    64|    64|            <h2 id="protocol">通信协议</h2>
+    65|    65|    65|            <p>事件数据打包为 <code>(valid + 2*polarity + 4*y + 256*4*x)</code> 和 <code>timestamp</code> 两个 32 位字写入 BRAM。PS 通过中断读取 4096 个特征值，再乘以全连接层权重得到 10 类输出。</p>
+    66|    66|    66|
+    67|    67|    67|            <h2 id="tech-details">关键技术点</h2>
+    68|    68|    68|            <ul>
+    69|    69|    69|              <li><strong>内存初始化</strong>：权重固化在 BRAM/URAM 中（<code>tiny_conv2_param.mem</code> 等）</li>
+    70|    70|    70|              <li><strong>异步图生成</strong>：不用等所有事件到位，边到达边生成图</li>
+    71|    71|    71|              <li><strong>Vivado TCL 脚本</strong>：<code>build_project.tcl</code> 包含完整 BD 创建和综合实现设置</li>
+    72|    72|    72|            </ul>
+    73|    73|    73|
+    74|    74|    74|            <h2 id="next-steps">后续计划</h2>
+    75|    75|    75|            <ul>
+    76|    76|    76|              <li>适配 Vivado 2025.2（IP 核版本升级需要验证）</li>
+    77|    77|    77|              <li>编写 PYNQ Overlay Python 脚本替代裸机 C++</li>
+    78|    78|    78|              <li>板级实际运行 demo 验证硬件加速效果</li>
+    79|    79|    79|            </ul>
+    80|    80|    80|          </div>
+    81|    81|    81|
+    82|    82|    82|          <nav class="article-pager">
+    83|    83|    83|            <a class="pager-link" href="fpt26-track-a.html">上一篇</a>
+    84|    84|    84|            <a class="pager-link" href="../index.html">回到首页</a>
+    85|    85|    85|            <a class="pager-link" href="silicon-trace-open.html">下一篇</a>
+    86|    86|    86|          </nav>
+    87|    87|    87|        </article>
+    88|    88|    88|      </main>
+    89|    89|    89|
+    90|    90|      <aside class="sidebar">
         <div class="sidebar-card">
           <h2 class="sidebar-title">目录</h2>
           <nav style="font-size:0.85rem;line-height:1.8;">
-            <a href="#overview" class="toc-h2">项目概述</a>
-            <a href="#hardware-arch" class="toc-h2">硬件架构</a>
-            <a href="#deployment" class="toc-h2">部署记录</a>
-            <a href="#protocol" class="toc-h2">通信协议</a>
-            <a href="#tech-details" class="toc-h2">关键技术点</a>
-            <a href="#next-steps" class="toc-h2">后续计划</a>
+            <a href="#overview" class="toc-h2">项目概述
+            <a href="#hardware-arch" class="toc-h2">硬件架构
+            <a href="#deployment" class="toc-h2">部署记录
+            <a href="#protocol" class="toc-h2">通信协议
+            <a href="#tech-details" class="toc-h2">关键技术点
+            <a href="#next-steps" class="toc-h2">后续计划
           </nav>
         </div>
       </aside>
-    98|    </div>
-    99|
-   100|    <footer class="site-footer">
-   101|      <div class="site-footer-inner">
-   102|        <span>&copy; 2026 Mufire-star</span>
-   103|        <span>Powered by GitHub Pages</span>
-   104|      </div>
-   105|    </footer>
-   106|  </div>
-   107|</body>
-   108|</html>
-   109|
+   103|   103|    98|    </div>
+   104|   104|    99|
+   105|   105|   100|    <footer class="site-footer">
+   106|   106|   101|      <div class="site-footer-inner">
+   107|   107|   102|        <span>&copy; 2026 Mufire-star</span>
+   108|   108|   103|        <span>Powered by GitHub Pages</span>
+   109|   109|   104|      </div>
+   110|   110|   105|    </footer>
+   111|   111|   106|  </div>
+   112|   112|   107|</body>
+   113|   113|   108|</html>
+   114|   114|   109|
