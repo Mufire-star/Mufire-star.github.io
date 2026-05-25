@@ -4,92 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>标签 · Mufire-star</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <style>
-    /* 标签页专用样式：紧凑网格 */
-    .tag-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 12px;
-    }
-    .tag-card {
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      transition: border-color var(--transition);
-    }
-    .tag-card:hover {
-      border-color: var(--accent-soft);
-    }
-    .tag-card-head {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      margin-bottom: 6px;
-      cursor: pointer;
-    }
-    .tag-card-head h3 {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--accent);
-      margin: 0;
-    }
-    .tag-card-head .badge {
-      font-size: 0.7rem;
-      color: var(--ink-faint);
-      background: var(--line);
-      padding: 1px 6px;
-      border-radius: 8px;
-    }
-    .tag-card-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-    .tag-card-list a {
-      font-size: 0.82rem;
-      padding: 2px 10px;
-      background: var(--accent-soft);
-      border-radius: 4px;
-      color: var(--ink-soft);
-      transition: all var(--transition);
-    }
-    .tag-card-list a:hover {
-      background: var(--accent);
-      color: white;
-      text-decoration: none;
-    }
-    /* 顶部快速导航 */
-    .tag-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-bottom: 16px;
-      padding: 10px 14px;
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
-    }
-    .tag-nav a {
-      font-size: 0.8rem;
-      padding: 2px 8px;
-      border-radius: 4px;
-      color: var(--ink-soft);
-      font-family: var(--font-mono);
-      transition: all var(--transition);
-    }
-    .tag-nav a:hover {
-      background: var(--accent-soft);
-      color: var(--accent);
-      text-decoration: none;
-    }
-    @media (max-width: 640px) {
-      .tag-grid { grid-template-columns: 1fr; }
-    }
+    .tag-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+    .tag-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px 16px; transition: border-color var(--transition); }
+    .tag-card:hover { border-color: var(--accent-soft); }
+    .tag-card-head { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+    .tag-card-head h3 { font-size: 0.95rem; font-weight: 600; color: var(--accent); margin: 0; }
+    .tag-card-head .badge { font-size: 0.7rem; color: var(--ink-faint); background: var(--line); padding: 1px 6px; border-radius: 8px; }
+    .tag-card-list { display: flex; flex-wrap: wrap; gap: 4px; }
+    .tag-card-list a { font-size: 0.82rem; padding: 2px 10px; background: var(--accent-soft); border-radius: 4px; color: var(--ink-soft); transition: all var(--transition); }
+    .tag-card-list a:hover { background: var(--accent); color: white; text-decoration: none; }
+    .tag-nav { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px; padding: 10px 14px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm); }
+    .tag-nav a { font-size: 0.8rem; padding: 2px 8px; border-radius: 4px; color: var(--ink-soft); font-family: var(--font-mono); transition: all var(--transition); }
+    .tag-nav a:hover { background: var(--accent-soft); color: var(--accent); text-decoration: none; }
+    @media (max-width: 640px) { .tag-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -103,194 +32,25 @@
         <a href="../about/index.html" class="nav-link">关于</a>
       </nav>
     </header>
-
     <p class="breadcrumb"><a href="../index.html">首页</a> / 标签</p>
-
     <div class="main-grid">
       <main class="main-content">
-        <div class="section-heading">
-          <h1 class="section-title" style="font-size:1.4rem;">标签</h1>
-          <span class="section-count">11 个</span>
-        </div>
-
-        <!-- 快速导航 -->
-        <div class="tag-nav">
-          <a href="#tag-Python">Python</a>
-          <a href="#tag-C++">C++</a>
-          <a href="#tag-C">C</a>
-          <a href="#tag-Verilog">Verilog</a>
-          <a href="#tag-SystemVerilog">SystemVerilog</a>
-          <a href="#tag-Rust">Rust</a>
-          <a href="#tag-TypeScript">TypeScript</a>
-          <a href="#tag-LaTeX">LaTeX</a>
-          <a href="#tag-Tcl">Tcl</a>
-          <a href="#tag-CMake">CMake</a>
-          <a href="#tag-Vue">Vue</a>
-          <a href="#tag-KiCad">KiCad</a>
-        </div>
-
+        <div class="section-heading"><h1 class="section-title" style="font-size:1.4rem;">标签</h1><span class="section-count">8 个</span></div>
+        <div class="tag-nav"><a href="#tag-Python">Python</a><a href="#tag-Verilog">Verilog</a><a href="#tag-SystemVerilog">SystemVerilog</a><a href="#tag-Rust">Rust</a><a href="#tag-TypeScript">TypeScript</a><a href="#tag-Tcl">Tcl</a><a href="#tag-Vivado">Vivado</a><a href="#tag-杂谈">杂谈</a></div>
         <div class="tag-grid">
-
-          <section class="tag-card" id="tag-Python">
-            <div class="tag-card-head">
-              <h3>Python</h3>
-              <span class="badge">6</span>
-            </div>
-            <div class="tag-card-list">
-              <a href="../src/fpt26-track-a.html">FPT'26 Track A</a>
-              <a href="../src/gcnn-dvs-fpga.html">GCNN-DVS FPGA</a>
-              <a href="../src/silicon-trace-open.html">硅迹开源</a>
-              <a href="../src/k1-rvv-env.html">K1 RVV &amp; SNN-STDP</a>
-              <a href="../src/ai-tools-workspace.html">AI 工具合集</a>
-              <a href="../src/misc-projects.html">其他项目合集</a>
-            </div>
-          </section>
-
-          <section class="tag-card" id="tag-C++">
-            <div class="tag-card-head">
-              <h3>C++</h3>
-              <span class="badge">3</span>
-            </div>
-            <div class="tag-card-list">
-              <a href="../src/fpt26-track-a.html">FPT'26 Track A</a>
-              <a href="../src/k1-rvv-env.html">K1 RVV &amp; SNN-STDP</a>
-              <a href="../src/llm4hls-intro.html">LLM4HLS 入门</a>
-            </div>
-          </section>
-
-          <section class="tag-card" id="tag-C">
-            <div class="tag-card-head">
-              <h3>C</h3>
-              <span class="badge">1</span>
-            </div>
-            <div class="tag-card-list">
-              <a href="../src/k1-rvv-env.html">K1 RVV &amp; SNN-STDP</a>
-            </div>
-          </section>
-
-          <section class="tag-card" id="tag-Verilog">
-            <div class="tag-card-head">
-              <h3>Verilog</h3>
-              <span class="badge">2</span>
-            </div>
-            <div class="tag-card-list">
-              <a href="../src/silicon-trace-open.html">硅迹开源</a>
-              <a href="../src/misc-projects.html">其他项目合集</a>
-            </div>
-          </section>
-
-          <section class="tag-card" id="tag-SystemVerilog">
-            <div class="tag-card-head">
-              <h3>SystemVerilog</h3>
-              <span class="badge">2</span>
-            </div>
-            <div class="tag-card-list">
-              <a href="../src/gcnn-dvs-fpga.html">GCNN-DVS FPGA</a>
-              <a href="../src/misc-projects.html">其他项目合集</a>
-            </div>
-          </section>
-
-          <section class="tag-card" id="tag-Rust">
-            <div class="tag-card-head">
-              <h3>Rust</h3>
-              <span class="badge">1</span>
-            </div>
-            <div class="tag-card-list">
-              <a href="../src/ai-tools-workspace.html">AI 工具合集</a>
-            </div>
-          </section>
-
-          <section class="tag-card" id="tag-TypeScript">
-            <div class="tag-card-head">
-              <h3>TypeScript</h3>
-              <span class="badge">1</span>
-            </div>
-            <div class="tag-card-list">
-              <a href="../src/ai-tools-workspace.html">AI 工具合集</a>
-            </div>
-          </section>
-
-          <section class="tag-card" id="tag-LaTeX">
-            <div class="tag-card-head">
-              <h3>LaTeX</h3>
-              <span class="badge">1</span>
-            </div>
-            <div class="tag-card-list">
-              <a href="../src/fpt26-track-a.html">FPT'26 Track A</a>
-            </div>
-          </section>
-
-          <section class="tag-card" id="tag-Tcl">
-            <div class="tag-card-head">
-              <h3>Tcl</h3>
-              <span class="badge">2</span>
-            </div>
-            <div class="tag-card-list">
-              <a href="../src/gcnn-dvs-fpga.html">GCNN-DVS FPGA</a>
-              <a href="../src/silicon-trace-open.html">硅迹开源</a>
-            </div>
-          </section>
-
-          <section class="tag-card" id="tag-CMake">
-            <div class="tag-card-head">
-              <h3>CMake</h3>
-              <span class="badge">1</span>
-            </div>
-            <div class="tag-card-list">
-              <a href="../src/k1-rvv-env.html">K1 RVV &amp; SNN-STDP</a>
-            </div>
-          </section>
-
-          <section class="tag-card" id="tag-Vue">
-            <div class="tag-card-head">
-              <h3>Vue</h3>
-              <span class="badge">1</span>
-            </div>
-            <div class="tag-card-list">
-              <a href="../src/ai-tools-workspace.html">AI 工具合集</a>
-            </div>
-          </section>
-
-          <section class="tag-card" id="tag-KiCad">
-            <div class="tag-card-head">
-              <h3>KiCad</h3>
-              <span class="badge">1</span>
-            </div>
-            <div class="tag-card-list">
-              <a href="../src/misc-projects.html">其他项目合集</a>
-            </div>
-          </section>
-
+          <section class="tag-card" id="tag-Python"><div class="tag-card-head"><h3>Python</h3><span class="badge">3</span></div><div class="tag-card-list"><a href="../src/005：gcnn-dvs-fpga.html">GCNN-DVS FPGA</a><a href="../src/002：silicon-trace-open.html">硅迹开源</a><a href="../src/004：ai-tools-workspace.html">AI 工具合集</a></div></section>
+          <section class="tag-card" id="tag-Verilog"><div class="tag-card-head"><h3>Verilog</h3><span class="badge">1</span></div><div class="tag-card-list"><a href="../src/002：silicon-trace-open.html">硅迹开源</a></div></section>
+          <section class="tag-card" id="tag-SystemVerilog"><div class="tag-card-head"><h3>SystemVerilog</h3><span class="badge">1</span></div><div class="tag-card-list"><a href="../src/005：gcnn-dvs-fpga.html">GCNN-DVS FPGA</a></div></section>
+          <section class="tag-card" id="tag-Rust"><div class="tag-card-head"><h3>Rust</h3><span class="badge">1</span></div><div class="tag-card-list"><a href="../src/004：ai-tools-workspace.html">AI 工具合集</a></div></section>
+          <section class="tag-card" id="tag-TypeScript"><div class="tag-card-head"><h3>TypeScript</h3><span class="badge">1</span></div><div class="tag-card-list"><a href="../src/004：ai-tools-workspace.html">AI 工具合集</a></div></section>
+          <section class="tag-card" id="tag-Tcl"><div class="tag-card-head"><h3>Tcl</h3><span class="badge">2</span></div><div class="tag-card-list"><a href="../src/005：gcnn-dvs-fpga.html">GCNN-DVS FPGA</a><a href="../src/002：silicon-trace-open.html">硅迹开源</a></div></section>
+          <section class="tag-card" id="tag-Vivado"><div class="tag-card-head"><h3>Vivado</h3><span class="badge">1</span></div><div class="tag-card-list"><a href="../src/003：vivado-tips.html">Vivado 使用小记</a></div></section>
+          <section class="tag-card" id="tag-杂谈"><div class="tag-card-head"><h3>杂谈</h3><span class="badge">1</span></div><div class="tag-card-list"><a href="../src/001：hello-world.html">你好，世界！</a></div></section>
         </div>
       </main>
-
-      <aside class="sidebar">
-        <div class="sidebar-card">
-          <h2 class="sidebar-title">关于本站</h2>
-          <p style="font-size:0.88rem;color:var(--ink-soft);line-height:1.7;">
-            标签按编程语言分类<br>
-            共 12 个语言/工具标签
-          </p>
-        </div>
-        <div class="sidebar-card">
-          <h2 class="sidebar-title">快速跳转</h2>
-          <div style="display:flex;flex-wrap:wrap;gap:4px;">
-            <a href="#tag-Python" class="meta-pill">Python</a>
-            <a href="#tag-C++" class="meta-pill">C++</a>
-            <a href="#tag-Verilog" class="meta-pill">Verilog</a>
-            <a href="#tag-SystemVerilog" class="meta-pill">SV</a>
-            <a href="#tag-Rust" class="meta-pill">Rust</a>
-          </div>
-        </div>
-      </aside>
+      <aside class="sidebar"><div class="sidebar-card"><h2 class="sidebar-title">说明</h2><p style="font-size:0.88rem;color:var(--ink-soft);line-height:1.7;">标签按编程语言分类<br>共 9 个语言/工具标签</p></div></aside>
     </div>
-
-    <footer class="site-footer">
-      <div class="site-footer-inner">
-        <span>&copy; 2026 Mufire-star</span>
-        <span>Powered by GitHub Pages</span>
-      </div>
-    </footer>
+    <footer class="site-footer"><div class="site-footer-inner"><span>&copy; 2026 Mufire-star</span><span>Powered by GitHub Pages</span></div></footer>
   </div>
 </body>
 </html>

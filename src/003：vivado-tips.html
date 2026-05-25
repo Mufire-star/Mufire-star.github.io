@@ -40,19 +40,19 @@
           <div class="article-body">
             <p>Windows 11 下配置 Vitis HLS 2025.2 的一些踩坑记录 (ฅ^u u^ฅ)</p>
 
-            <h2>环境配置</h2>
+            <h2 id="env">环境配置</h2>
             <ul>
               <li><strong>Vivado / Vitis 2025.2</strong> 安装在 <code>D:\Programs\Xilinx\2025.2</code></li>
               <li><strong>Git Bash</strong> 使用 <code>D:\Programs\Git\bin\bash.exe</code>，而非 WSL</li>
               <li><strong>Te&chi; Live 2026</strong> 在 <code>D:\Programs\texlive\2026</code></li>
             </ul>
 
-            <h2>必须设置 HERMES_GIT_BASH_PATH</h2>
+            <h2 id="path-var">必须设置 HERMES_GIT_BASH_PATH</h2>
             <p>在 Hermes Agent 中运行 Vitis HLS 时，必须设置环境变量：</p>
             <pre><code>export HERMES_GIT_BASH_PATH="D:/Programs/Git/bin/bash.exe"</code></pre>
             <p>这会强制使用 Git Bash 而不是 WSL，避免 WSLInterop 禁用导致的路径解析问题。</p>
 
-            <h2>常见错误</h2>
+            <h2 id="common-errors">常见错误</h2>
 
             <h3>1. WSL 启动 banner 污染文件内容</h3>
             <p>当使用 Hermes 的 <code>write_file</code> 工具时，如果终端通过 WSL 连接，文件会被 WSL 启动 banner 的 UTF-16 null 字节污染。解决方法：通过 Git Bash 写入，或使用 Python 脚本写入。</p>
@@ -63,7 +63,7 @@
             <h3>3. Git for Windows 的路径分隔符</h3>
             <p>Git Bash 中应使用正斜杠 <code>/</code> 替代反斜杠 <code>\</code>。例如：<code>D:/Programs/Xilinx/2025.2/Vivado/bin/vivado</code></p>
 
-            <h2>推荐配置</h2>
+            <h2 id="recommend-config">推荐配置</h2>
             <p>在 <code>~/.bashrc</code> 中加入：</p>
             <pre><code># Vitis/Vivado
 export XILINX_HLS="D:/Programs/Xilinx/2025.2/Vitis_HLS"
@@ -74,9 +74,9 @@ export HERMES_GIT_BASH_PATH="D:/Programs/Git/bin/bash.exe"</code></pre>
           </div>
 
           <nav class="article-pager">
-            <a class="pager-link" href="llm4hls-intro.html">上一篇</a>
+            <a class="pager-link" href="002：silicon-trace-open.html">上一篇</a>
             <a class="pager-link" href="../index.html">回到首页</a>
-            <a class="pager-link" href="fpt26-progress.html">下一篇</a>
+            <a class="pager-link" href="004：ai-tools-workspace.html">下一篇</a>
           </nav>
         </article>
       </main>
@@ -84,8 +84,11 @@ export HERMES_GIT_BASH_PATH="D:/Programs/Git/bin/bash.exe"</code></pre>
       <aside class="sidebar">
         <div class="sidebar-card">
           <h2 class="sidebar-title">目录</h2>
-          <nav style="font-size:0.88rem;">
-            <p style="color:var(--ink-faint);font-size:0.82rem;">滚动阅读</p>
+          <nav style="font-size:0.85rem;line-height:1.8;">
+            <a href="#env" class="toc-h2">环境配置</a>
+            <a href="#path-var" class="toc-h2">必须设置 HERMES_GIT_BASH_PATH</a>
+            <a href="#common-errors" class="toc-h2">常见错误</a>
+            <a href="#recommend-config" class="toc-h2">推荐配置</a>
           </nav>
         </div>
       </aside>

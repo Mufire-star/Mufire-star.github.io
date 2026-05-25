@@ -9,102 +9,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <style>
-    .lock-screen {
-      min-height: 60vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-    }
-    .lock-screen h1 {
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-    .lock-screen p {
-      color: var(--ink-soft);
-      margin-bottom: 24px;
-    }
-    .lock-input {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .lock-input input {
-      padding: 10px 16px;
-      border: 1px solid var(--line-strong);
-      border-radius: 8px;
-      font-size: 1rem;
-      font-family: var(--font-sans);
-      background: var(--paper);
-      color: var(--ink);
-      outline: none;
-      width: 220px;
-      transition: border-color var(--transition);
-    }
-    .lock-input input:focus {
-      border-color: var(--accent);
-    }
-    .lock-input button {
-      padding: 10px 24px;
-      border: none;
-      border-radius: 8px;
-      background: var(--accent);
-      color: white;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background var(--transition);
-    }
-    .lock-input button:hover {
-      background: #4338ca;
-    }
-    .lock-error {
-      color: #dc2626;
-      font-size: 0.88rem;
-      margin-top: 12px;
-      min-height: 1.5em;
-    }
-    .private-content {
-      display: none;
-    }
-    .private-content.is-unlocked {
-      display: block;
-    }
-    .private-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 16px;
-    }
-    .private-list a {
-      display: block;
-      padding: 12px 16px;
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
-      color: var(--ink);
-      font-weight: 500;
-      transition: all var(--transition);
-    }
-    .private-list a:hover {
-      border-color: var(--accent-soft);
-      box-shadow: var(--shadow-sm);
-      text-decoration: none;
-      color: var(--accent);
-    }
-    .private-list a small {
-      display: block;
-      font-weight: 400;
-      font-size: 0.82rem;
-      color: var(--ink-faint);
-      margin-top: 2px;
-    }
-    @media (max-width: 480px) {
-      .lock-input input { width: 100%; }
-    }
+    .lock-screen { min-height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; }
+    .lock-screen h1 { font-size: 2rem; margin-bottom: 8px; }
+    .lock-screen p { color: var(--ink-soft); margin-bottom: 24px; }
+    .lock-input { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .lock-input input { padding: 10px 16px; border: 1px solid var(--line-strong); border-radius: 8px; font-size: 1rem; font-family: var(--font-sans); background: var(--paper); color: var(--ink); outline: none; width: 220px; transition: border-color var(--transition); }
+    .lock-input input:focus { border-color: var(--accent); }
+    .lock-input button { padding: 10px 24px; border: none; border-radius: 8px; background: var(--accent); color: white; font-size: 1rem; font-weight: 500; cursor: pointer; transition: background var(--transition); }
+    .lock-input button:hover { background: #4338ca; }
+    .lock-error { color: #dc2626; font-size: 0.88rem; margin-top: 12px; min-height: 1.5em; }
+    .private-content { display: none; }
+    .private-content.is-unlocked { display: block; }
+    .private-list { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+    .private-list a { display: block; padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm); color: var(--ink); font-weight: 500; transition: all var(--transition); }
+    .private-list a:hover { border-color: var(--accent-soft); box-shadow: var(--shadow-sm); text-decoration: none; color: var(--accent); }
+    .private-list a small { display: block; font-weight: 400; font-size: 0.82rem; color: var(--ink-faint); margin-top: 2px; }
+    @media (max-width: 480px) { .lock-input input { width: 100%; } }
   </style>
 </head>
 <body>
@@ -141,15 +61,22 @@
           </div>
 
           <div class="private-list">
+            <a href="k1-rvv-env.html">
+              K1 RVV 加速 &amp; SNN-STDP FPGA
+              <small>MUSE Pi K1 嵌入式 + ZCU104 脉冲神经网络</small>
+            </a>
+            <a href="misc-projects.html">
+              其他项目合集：CNN-DVS · RISC-V CPU · KiCad
+              <small>本地未公开项目汇总</small>
+            </a>
             <a href="repo-notes.html">
               未公开仓库笔记
               <small>私有项目的技术笔记和踩坑记录</small>
             </a>
-            <!-- 后续可继续添加 -->
           </div>
 
           <p style="margin-top:20px;font-size:0.85rem;color:var(--ink-faint);">
-            关闭页面后自动锁定 · 如需修改密码请编辑 private/index.html
+            关闭页面后自动锁定
           </p>
         </div>
 
@@ -175,19 +102,13 @@
   </div>
 
   <script>
-    // ========== 密码配置 ==========
-    // 修改下面的密码为你想要的
     var CORRECT_PASSWORD = "mufire2026";
-
     function checkPass() {
       var input = document.getElementById('passwordInput');
       var error = document.getElementById('lockError');
-      var val = input.value;
-
-      if (val === CORRECT_PASSWORD) {
+      if (input.value === CORRECT_PASSWORD) {
         document.getElementById('lockScreen').style.display = 'none';
         document.getElementById('privateContent').classList.add('is-unlocked');
-        // 可选：保存到 session 避免刷新后重新输入
         sessionStorage.setItem('private_unlocked', 'true');
       } else {
         error.textContent = '密码错误，请重试';
@@ -195,16 +116,12 @@
         input.focus();
       }
     }
-
-    // 页面加载时检查 session
     window.addEventListener('DOMContentLoaded', function() {
       if (sessionStorage.getItem('private_unlocked') === 'true') {
         document.getElementById('lockScreen').style.display = 'none';
         document.getElementById('privateContent').classList.add('is-unlocked');
       }
     });
-
-    // 页面关闭时清除
     window.addEventListener('beforeunload', function() {
       sessionStorage.removeItem('private_unlocked');
     });

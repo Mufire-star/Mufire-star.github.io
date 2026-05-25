@@ -21,13 +21,14 @@
       </nav>
     </header>
 
-    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-芯片设计">芯片设计</a> / 其他项目</p>
+    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="index.html">私有笔记</a> / 其他项目合集</p>
 
     <div class="main-grid">
       <main class="main-content">
         <article>
           <header class="article-header">
             <div class="article-meta">
+              <span class="meta-pill" style="background:var(--accent-soft);color:var(--accent);">🔒 私有</span>
               <span class="meta-pill meta-date">2026-05-06</span>
               <a href="../categories/index.html#category-芯片设计" class="meta-pill">芯片设计</a>
               <a href="../categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
@@ -108,9 +109,9 @@
           </div>
 
           <nav class="article-pager">
-            <a class="pager-link" href="ai-tools-workspace.html">上一篇</a>
-            <a class="pager-link" href="../index.html">回到首页</a>
-            <span class="pager-link is-disabled">下一篇</span>
+            <a class="pager-link" href="k1-rvv-env.html">上一篇</a>
+            <a class="pager-link" href="index.html">返回笔记列表</a>
+            <a class="pager-link" href="repo-notes.html">下一篇</a>
           </nav>
         </article>
       </main>
@@ -138,5 +139,10 @@
       </div>
     </footer>
   </div>
+  <script>
+    if (sessionStorage.getItem('private_unlocked') !== 'true') {
+      window.location.href = 'index.html';
+    }
+  </script>
 </body>
 </html>
