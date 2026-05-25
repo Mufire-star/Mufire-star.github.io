@@ -381,12 +381,16 @@ body::before {
 /* ---- 侧边栏目录 ---- */
 .toc-h2 {
   display: block;
-  padding: 2px 0;
+  padding: 4px 0;
   font-weight: 500;
+  border-bottom: 1px solid var(--line);
+}
+.toc-h2:last-child {
+  border-bottom: none;
 }
 .toc-h3 {
   display: block;
-  padding: 1px 0 1px 12px;
+  padding: 3px 0 3px 14px;
   font-size: 0.82rem;
   color: var(--ink-soft);
 }
