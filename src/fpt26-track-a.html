@@ -1,124 +1,133 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FPT'26 Track A：LLM4HLS Agent · Mufire-star</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-  <div class="viewport">
-    <header class="site-header">
-      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
-      <nav class="main-nav">
-        <a href="../index.html" class="nav-link">首页</a>
-        <a href="../tags/index.html" class="nav-link">标签</a>
-        <a href="../categories/index.html" class="nav-link">分类</a>
-        <a href="../about/index.html" class="nav-link">关于</a>
-      </nav>
-    </header>
-
-    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-项目">项目</a> / FPT'26 Track A</p>
-
-    <div class="main-grid">
-      <main class="main-content">
-        <article>
-          <header class="article-header">
-            <div class="article-meta">
-              <span class="meta-pill meta-date">2026-05-17</span>
-              <a href="../categories/index.html#category-项目" class="meta-pill">项目</a>
-              <a href="../categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
-              <a href="../tags/index.html#tag-Python" class="meta-pill">#Python</a>
-              <a href="../tags/index.html#tag-C++" class="meta-pill">#C++</a>
-              <a href="../tags/index.html#tag-LaTeX" class="meta-pill">#LaTeX</a>
-            </div>
-            <h1>FPT'26 Track A：LLM4HLS Agent —— 用大语言模型辅助高层次综合</h1>
-          </header>
-
-          <div class="article-body">
-            <p><strong>项目地址</strong>：<a href="https://github.com/Mufire-star/FPT" target="_blank">github.com/Mufire-star/FPT</a></p>
-
-            <h2>项目概述</h2>
-            <p>FPT'26 Design Competition Track A —— <strong>LLM4HLS Agent</strong>。目标是构建一个基于大语言模型的智能 Agent，能够自动生成 Vitis HLS 兼容的 C/C++ 代码，辅助 FPGA 高层次综合流程。</p>
-            <p>合作者：<strong>ForBloodB</strong>（Co-author）</p>
-
-            <h2>技术架构</h2>
-            <p>完整的 6 阶段 Agent 工作流：</p>
-            <ol>
-              <li><strong>需求解析</strong> —— 将自然语言描述转换成结构化规范</li>
-              <li><strong>代码生成</strong> —— DeepSeek API 生成 Vitis HLS 兼容 C++ 代码</li>
-              <li><strong>RAG 增强</strong> —— 基于 7 种 HLS 加速模式库进行检索增强</li>
-              <li><strong>编译验证</strong> —— 自动调用 Vitis HLS 综合与仿真</li>
-              <li><strong>反馈循环</strong> —— 根据编译错误自动修正代码（3 轮迭代）</li>
-              <li><strong>性能评估</strong> —— 对比生成 RTL 与手写 RTL</li>
-            </ol>
-
-            <h2>关键技术细节</h2>
-            <ul>
-              <li><strong>DeepSeek API</strong>：通过本地代理 <code>127.0.0.1:7897</code> 访问</li>
-              <li><strong>RAG 模式库</strong>：Pipeline、Array Partition、Dataflow、Loop Unroll、Function Inline、Interface Synthesis、Memory Reorg</li>
-              <li><strong>反馈循环</strong>：3 轮迭代，每次读取 csynth.xml 解析时序/资源数据</li>
-              <li><strong>Token 效率指标</strong>：定义 <code>E = latency_improvement / total_tokens</code></li>
-            </ul>
-
-            <h2>实验结果</h2>
-            <table>
-              <thead><tr><th>指标</th><th>LLM 生成</th><th>手写 RTL</th><th>差异</th></tr></thead>
-              <tbody>
-                <tr><td>执行周期</td><td>2.2M</td><td>2.33M</td><td>-5.6% (更好)</td></tr>
-                <tr><td>时序</td><td>25.7 ns</td><td>5.0 ns</td><td>+414%</td></tr>
-                <tr><td>LUT 使用</td><td>1,024</td><td>892</td><td>+14.8%</td></tr>
-              </tbody>
-            </table>
-
-            <h2>技术栈</h2>
-            <ul>
-              <li>Python + Hermes Agent 框架</li>
-              <li>DeepSeek V4 Flash 模型</li>
-              <li>Vitis HLS 2025.2 | TeX Live 2026</li>
-              <li>Git Bash（Windows 11）</li>
-              <li>IEEE 论文模板（xelatex 编译）</li>
-            </ul>
-
-            <h2>论文产出</h2>
-            <p>已生成 3 页 IEEE 格式论文草稿，包含 6 张数据表、RAG 消融实验、反馈循环分析。全部使用 xelatex 编译，模板为 IEEE Conference Template。</p>
-
-            <h2>项目结构</h2>
-            <pre><code>FPT/
-├── src/fpt26_agent/    # Agent 核心代码
-├── data/rag_snippets/  # HLS 模式库
-├── experiments/        # 实验数据
-├── reports/paper/      # 论文 LaTeX
-└── scripts/            # 一键复现脚本</code></pre>
-          </div>
-
-          <nav class="article-pager">
-            <span class="pager-link is-disabled">上一篇</span>
-            <a class="pager-link" href="../index.html">回到首页</a>
-            <a class="pager-link" href="gcnn-dvs-fpga.html">下一篇</a>
-          </nav>
-        </article>
-      </main>
-
+     1|<!DOCTYPE html>
+     2|<html lang="zh-CN">
+     3|<head>
+     4|  <meta charset="UTF-8">
+     5|  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|  <title>FPT'26 Track A：LLM4HLS Agent · Mufire-star</title>
+     7|  <link rel="preconnect" href="https://fonts.googleapis.com">
+     8|  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     9|  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    10|  <link rel="stylesheet" href="../css/style.css">
+    11|</head>
+    12|<body>
+    13|  <div class="viewport">
+    14|    <header class="site-header">
+    15|      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
+    16|      <nav class="main-nav">
+    17|        <a href="../index.html" class="nav-link">首页</a>
+    18|        <a href="../tags/index.html" class="nav-link">标签</a>
+    19|        <a href="../categories/index.html" class="nav-link">分类</a>
+    20|        <a href="../about/index.html" class="nav-link">关于</a>
+    21|      </nav>
+    22|    </header>
+    23|
+    24|    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-项目">项目</a> / FPT'26 Track A</p>
+    25|
+    26|    <div class="main-grid">
+    27|      <main class="main-content">
+    28|        <article>
+    29|          <header class="article-header">
+    30|            <div class="article-meta">
+    31|              <span class="meta-pill meta-date">2026-05-17</span>
+    32|              <a href="../categories/index.html#category-项目" class="meta-pill">项目</a>
+    33|              <a href="../categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
+    34|              <a href="../tags/index.html#tag-Python" class="meta-pill">#Python</a>
+    35|              <a href="../tags/index.html#tag-C++" class="meta-pill">#C++</a>
+    36|              <a href="../tags/index.html#tag-LaTeX" class="meta-pill">#LaTeX</a>
+    37|            </div>
+    38|            <h1>FPT'26 Track A：LLM4HLS Agent —— 用大语言模型辅助高层次综合</h1>
+    39|          </header>
+    40|
+    41|          <div class="article-body">
+    42|            <p><strong>项目地址</strong>：<a href="https://github.com/Mufire-star/FPT" target="_blank">github.com/Mufire-star/FPT</a></p>
+    43|
+    44|            <h2 id="overview">项目概述</h2>
+    45|            <p>FPT'26 Design Competition Track A —— <strong>LLM4HLS Agent</strong>。目标是构建一个基于大语言模型的智能 Agent，能够自动生成 Vitis HLS 兼容的 C/C++ 代码，辅助 FPGA 高层次综合流程。</p>
+    46|            <p>合作者：<strong>ForBloodB</strong>（Co-author）</p>
+    47|
+    48|            <h2 id="overview">技术架构</h2>
+    49|            <p>完整的 6 阶段 Agent 工作流：</p>
+    50|            <ol>
+    51|              <li><strong>需求解析</strong> —— 将自然语言描述转换成结构化规范</li>
+    52|              <li><strong>代码生成</strong> —— DeepSeek API 生成 Vitis HLS 兼容 C++ 代码</li>
+    53|              <li><strong>RAG 增强</strong> —— 基于 7 种 HLS 加速模式库进行检索增强</li>
+    54|              <li><strong>编译验证</strong> —— 自动调用 Vitis HLS 综合与仿真</li>
+    55|              <li><strong>反馈循环</strong> —— 根据编译错误自动修正代码（3 轮迭代）</li>
+    56|              <li><strong>性能评估</strong> —— 对比生成 RTL 与手写 RTL</li>
+    57|            </ol>
+    58|
+    59|            <h2 id="overview">关键技术细节</h2>
+    60|            <ul>
+    61|              <li><strong>DeepSeek API</strong>：通过本地代理 <code>127.0.0.1:7897</code> 访问</li>
+    62|              <li><strong>RAG 模式库</strong>：Pipeline、Array Partition、Dataflow、Loop Unroll、Function Inline、Interface Synthesis、Memory Reorg</li>
+    63|              <li><strong>反馈循环</strong>：3 轮迭代，每次读取 csynth.xml 解析时序/资源数据</li>
+    64|              <li><strong>Token 效率指标</strong>：定义 <code>E = latency_improvement / total_tokens</code></li>
+    65|            </ul>
+    66|
+    67|            <h2 id="overview">实验结果</h2>
+    68|            <table>
+    69|              <thead><tr><th>指标</th><th>LLM 生成</th><th>手写 RTL</th><th>差异</th></tr></thead>
+    70|              <tbody>
+    71|                <tr><td>执行周期</td><td>2.2M</td><td>2.33M</td><td>-5.6% (更好)</td></tr>
+    72|                <tr><td>时序</td><td>25.7 ns</td><td>5.0 ns</td><td>+414%</td></tr>
+    73|                <tr><td>LUT 使用</td><td>1,024</td><td>892</td><td>+14.8%</td></tr>
+    74|              </tbody>
+    75|            </table>
+    76|
+    77|            <h2 id="overview">技术栈</h2>
+    78|            <ul>
+    79|              <li>Python + Hermes Agent 框架</li>
+    80|              <li>DeepSeek V4 Flash 模型</li>
+    81|              <li>Vitis HLS 2025.2 | TeX Live 2026</li>
+    82|              <li>Git Bash（Windows 11）</li>
+    83|              <li>IEEE 论文模板（xelatex 编译）</li>
+    84|            </ul>
+    85|
+    86|            <h2 id="overview">论文产出</h2>
+    87|            <p>已生成 3 页 IEEE 格式论文草稿，包含 6 张数据表、RAG 消融实验、反馈循环分析。全部使用 xelatex 编译，模板为 IEEE Conference Template。</p>
+    88|
+    89|            <h2 id="overview">项目结构</h2>
+    90|            <pre><code>FPT/
+    91|├── src/fpt26_agent/    # Agent 核心代码
+    92|├── data/rag_snippets/  # HLS 模式库
+    93|├── experiments/        # 实验数据
+    94|├── reports/paper/      # 论文 LaTeX
+    95|└── scripts/            # 一键复现脚本</code></pre>
+    96|          </div>
+    97|
+    98|          <nav class="article-pager">
+    99|            <span class="pager-link is-disabled">上一篇</span>
+   100|            <a class="pager-link" href="../index.html">回到首页</a>
+   101|            <a class="pager-link" href="gcnn-dvs-fpga.html">下一篇</a>
+   102|          </nav>
+   103|        </article>
+   104|      </main>
+   105|
       <aside class="sidebar">
         <div class="sidebar-card">
           <h2 class="sidebar-title">目录</h2>
-          <nav style="font-size:0.88rem;">
-            <p style="color:var(--ink-faint);font-size:0.82rem;">滚动阅读</p>
+          <nav style="font-size:0.85rem;line-height:1.8;">
+            <a href="#overview" class="toc-h2">项目概述</a>
+            <a href="#arch" class="toc-h2">技术架构</a>
+            <a href="#tech-details" class="toc-h2">关键技术细节</a>
+            <a href="#rag-patterns" class="toc-h3">RAG 模式库</a>
+            <a href="#deepseek-config" class="toc-h3">DeepSeek API 配置</a>
+            <a href="#results" class="toc-h2">实验结果</a>
+            <a href="#tech-stack" class="toc-h2">技术栈</a>
+            <a href="#paper" class="toc-h2">论文产出</a>
+            <a href="#structure" class="toc-h2">项目结构</a>
           </nav>
         </div>
       </aside>
-    </div>
-
-    <footer class="site-footer">
-      <div class="site-footer-inner">
-        <span>&copy; 2026 Mufire-star</span>
-        <span>Powered by GitHub Pages</span>
-      </div>
-    </footer>
-  </div>
-</body>
-</html>
+   114|    </div>
+   115|
+   116|    <footer class="site-footer">
+   117|      <div class="site-footer-inner">
+   118|        <span>&copy; 2026 Mufire-star</span>
+   119|        <span>Powered by GitHub Pages</span>
+   120|      </div>
+   121|    </footer>
+   122|  </div>
+   123|</body>
+   124|</html>
+   125|

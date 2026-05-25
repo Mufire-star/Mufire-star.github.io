@@ -1,136 +1,143 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>其他项目：CNN-DVS & RISC-V CPU & PCB · Mufire-star</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-  <div class="viewport">
-    <header class="site-header">
-      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
-      <nav class="main-nav">
-        <a href="../index.html" class="nav-link">首页</a>
-        <a href="../tags/index.html" class="nav-link">标签</a>
-        <a href="../categories/index.html" class="nav-link">分类</a>
-        <a href="../about/index.html" class="nav-link">关于</a>
-      </nav>
-    </header>
-
-    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-芯片设计">芯片设计</a> / 其他项目</p>
-
-    <div class="main-grid">
-      <main class="main-content">
-        <article>
-          <header class="article-header">
-            <div class="article-meta">
-              <span class="meta-pill meta-date">2026-05-06</span>
-              <a href="../categories/index.html#category-芯片设计" class="meta-pill">芯片设计</a>
-              <a href="../categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
-              <a href="../categories/index.html#category-嵌入式" class="meta-pill">嵌入式</a>
-              <a href="../tags/index.html#tag-Python" class="meta-pill">#Python</a>
-              <a href="../tags/index.html#tag-Verilog" class="meta-pill">#Verilog</a>
-              <a href="../tags/index.html#tag-SystemVerilog" class="meta-pill">#SystemVerilog</a>
-              <a href="../tags/index.html#tag-KiCad" class="meta-pill">#KiCad</a>
-            </div>
-            <h1>其他项目合集：CNN-DVS · RISC-V CPU · KiCad 测试板</h1>
-          </header>
-
-          <div class="article-body">
-
-            <h2>一、CNN-DVS：红外图像 Tiny YOLO 目标检测</h2>
-            <p><strong>项目路径</strong>：<code>D:\Projects\cnn_dvs</code></p>
-            <p>在红外图像流上训练一个小型 YOLO 类 CNN。只使用 <code>udp</code> 红外图像流（忽略 combine 和 usb 图像）。</p>
-
-            <h3>数据集结构</h3>
-            <pre><code>dataset/
-├── train/.../udp/0.png
-├── val/.../udp/0.png
-├── test/.../udp/0.png
-└── label/0.txt  (YOLO 格式)</code></pre>
-
-            <h3>实验配置</h3>
-            <ul>
-              <li>对比实验配置（YAML）：fused vs half precision、udp3 vs usb1 数据源</li>
-              <li>消融实验：dataset_udp_highacc.yaml、dataset_udp_map50_finetune.yaml</li>
-              <li>融合 YOLO 实验：fused_yolo.yaml</li>
-              <li>半精度训练对比：sbalanced_fused_half_r1.yaml</li>
-            </ul>
-
-            <hr>
-
-            <h2>二、CNN-FINN：Xilinx FINN 框架探索</h2>
-            <p><strong>项目路径</strong>：<code>D:\Projects\cnn_finn</code></p>
-            <p>Xilinx FINN 框架的本地部署和实验。FINN 是一个用于在 FPGA 上部署量化神经网络的框架，支持从训练到部署的端到端流程。</p>
-            <ul>
-              <li>包含 FINN 官方仓库的全部源码（finn/ 子目录）</li>
-              <li>Docker 构建脚本（run-docker.sh）</li>
-              <li>自定义 HLS 组件（custom_hls/）</li>
-              <li>FINN 运行时库（finn-rtllib/）</li>
-            </ul>
-
-            <hr>
-
-            <h2>三、RISC-V CPU 设计</h2>
-            <p><strong>项目路径</strong>：<code>D:\Projects\riscv_cpu_design</code></p>
-            <p>一个简单的单周期 RISC-V CPU，用 Verilog 实现，包含完整的指令集执行单元。</p>
-
-            <h3>模块列表</h3>
-            <ul>
-              <li><strong>PC</strong>：程序计数器</li>
-              <li><strong>IM</strong>：指令存储器</li>
-              <li><strong>IR</strong>：指令寄存器</li>
-              <li><strong>RF</strong>：寄存器堆</li>
-              <li><strong>ALU</strong>：算术逻辑单元</li>
-              <li><strong>EXT</strong>：立即数扩展</li>
-              <li><strong>DM</strong>：数据存储器</li>
-              <li><strong>ControlUnit</strong>：控制单元</li>
-              <li><strong>NPC</strong>：下一条 PC 计算</li>
-              <li><strong>MUX_2to1/3to1</strong>：多路选择器</li>
-              <li><strong>Flopr</strong>：寄存器（带复位）</li>
-            </ul>
-            <p>包含 UVM 验证环境和波形仿真脚本。</p>
-
-            <hr>
-
-            <h2>四、KiCad 测试板设计</h2>
-            <p><strong>项目路径</strong>：<code>D:\Projects\test_board</code></p>
-            <p>使用 KiCad 设计的 PCB 测试板，包含原理图和 PCB 布局。用于硬件调试和功能验证。</p>
-            <ul>
-              <li>KiCad PCB 工程文件（test_board.kicad_pro / .kicad_pcb / .kicad_sch）</li>
-              <li>多版本迭代（test_board_fixed / kicad10 / kicad6）</li>
-              <li>备份文件（test_board-backups/）</li>
-            </ul>
-          </div>
-
-          <nav class="article-pager">
-            <a class="pager-link" href="ai-tools-workspace.html">上一篇</a>
-            <a class="pager-link" href="../index.html">回到首页</a>
-            <span class="pager-link is-disabled">下一篇</span>
-          </nav>
-        </article>
-      </main>
-
+     1|<!DOCTYPE html>
+     2|<html lang="zh-CN">
+     3|<head>
+     4|  <meta charset="UTF-8">
+     5|  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|  <title>其他项目：CNN-DVS & RISC-V CPU & PCB · Mufire-star</title>
+     7|  <link rel="preconnect" href="https://fonts.googleapis.com">
+     8|  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     9|  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    10|  <link rel="stylesheet" href="../css/style.css">
+    11|</head>
+    12|<body>
+    13|  <div class="viewport">
+    14|    <header class="site-header">
+    15|      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
+    16|      <nav class="main-nav">
+    17|        <a href="../index.html" class="nav-link">首页</a>
+    18|        <a href="../tags/index.html" class="nav-link">标签</a>
+    19|        <a href="../categories/index.html" class="nav-link">分类</a>
+    20|        <a href="../about/index.html" class="nav-link">关于</a>
+    21|      </nav>
+    22|    </header>
+    23|
+    24|    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-芯片设计">芯片设计</a> / 其他项目</p>
+    25|
+    26|    <div class="main-grid">
+    27|      <main class="main-content">
+    28|        <article>
+    29|          <header class="article-header">
+    30|            <div class="article-meta">
+    31|              <span class="meta-pill meta-date">2026-05-06</span>
+    32|              <a href="../categories/index.html#category-芯片设计" class="meta-pill">芯片设计</a>
+    33|              <a href="../categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
+    34|              <a href="../categories/index.html#category-嵌入式" class="meta-pill">嵌入式</a>
+    35|              <a href="../tags/index.html#tag-Python" class="meta-pill">#Python</a>
+    36|              <a href="../tags/index.html#tag-Verilog" class="meta-pill">#Verilog</a>
+    37|              <a href="../tags/index.html#tag-SystemVerilog" class="meta-pill">#SystemVerilog</a>
+    38|              <a href="../tags/index.html#tag-KiCad" class="meta-pill">#KiCad</a>
+    39|            </div>
+    40|            <h1>其他项目合集：CNN-DVS · RISC-V CPU · KiCad 测试板</h1>
+    41|          </header>
+    42|
+    43|          <div class="article-body">
+    44|
+    45|            <h2 id="cnn-dvs">一、CNN-DVS：红外图像 Tiny YOLO 目标检测</h2>
+    46|            <p><strong>项目路径</strong>：<code>D:\Projects\cnn_dvs</code></p>
+    47|            <p>在红外图像流上训练一个小型 YOLO 类 CNN。只使用 <code>udp</code> 红外图像流（忽略 combine 和 usb 图像）。</p>
+    48|
+    49|            <h3 id="dataset">数据集结构</h3>
+    50|            <pre><code>dataset/
+    51|├── train/.../udp/0.png
+    52|├── val/.../udp/0.png
+    53|├── test/.../udp/0.png
+    54|└── label/0.txt  (YOLO 格式)</code></pre>
+    55|
+    56|            <h3 id="dataset">实验配置</h3>
+    57|            <ul>
+    58|              <li>对比实验配置（YAML）：fused vs half precision、udp3 vs usb1 数据源</li>
+    59|              <li>消融实验：dataset_udp_highacc.yaml、dataset_udp_map50_finetune.yaml</li>
+    60|              <li>融合 YOLO 实验：fused_yolo.yaml</li>
+    61|              <li>半精度训练对比：sbalanced_fused_half_r1.yaml</li>
+    62|            </ul>
+    63|
+    64|            <hr>
+    65|
+    66|            <h2 id="cnn-dvs">二、CNN-FINN：Xilinx FINN 框架探索</h2>
+    67|            <p><strong>项目路径</strong>：<code>D:\Projects\cnn_finn</code></p>
+    68|            <p>Xilinx FINN 框架的本地部署和实验。FINN 是一个用于在 FPGA 上部署量化神经网络的框架，支持从训练到部署的端到端流程。</p>
+    69|            <ul>
+    70|              <li>包含 FINN 官方仓库的全部源码（finn/ 子目录）</li>
+    71|              <li>Docker 构建脚本（run-docker.sh）</li>
+    72|              <li>自定义 HLS 组件（custom_hls/）</li>
+    73|              <li>FINN 运行时库（finn-rtllib/）</li>
+    74|            </ul>
+    75|
+    76|            <hr>
+    77|
+    78|            <h2 id="cnn-dvs">三、RISC-V CPU 设计</h2>
+    79|            <p><strong>项目路径</strong>：<code>D:\Projects\riscv_cpu_design</code></p>
+    80|            <p>一个简单的单周期 RISC-V CPU，用 Verilog 实现，包含完整的指令集执行单元。</p>
+    81|
+    82|            <h3 id="dataset">模块列表</h3>
+    83|            <ul>
+    84|              <li><strong>PC</strong>：程序计数器</li>
+    85|              <li><strong>IM</strong>：指令存储器</li>
+    86|              <li><strong>IR</strong>：指令寄存器</li>
+    87|              <li><strong>RF</strong>：寄存器堆</li>
+    88|              <li><strong>ALU</strong>：算术逻辑单元</li>
+    89|              <li><strong>EXT</strong>：立即数扩展</li>
+    90|              <li><strong>DM</strong>：数据存储器</li>
+    91|              <li><strong>ControlUnit</strong>：控制单元</li>
+    92|              <li><strong>NPC</strong>：下一条 PC 计算</li>
+    93|              <li><strong>MUX_2to1/3to1</strong>：多路选择器</li>
+    94|              <li><strong>Flopr</strong>：寄存器（带复位）</li>
+    95|            </ul>
+    96|            <p>包含 UVM 验证环境和波形仿真脚本。</p>
+    97|
+    98|            <hr>
+    99|
+   100|            <h2 id="cnn-dvs">四、KiCad 测试板设计</h2>
+   101|            <p><strong>项目路径</strong>：<code>D:\Projects\test_board</code></p>
+   102|            <p>使用 KiCad 设计的 PCB 测试板，包含原理图和 PCB 布局。用于硬件调试和功能验证。</p>
+   103|            <ul>
+   104|              <li>KiCad PCB 工程文件（test_board.kicad_pro / .kicad_pcb / .kicad_sch）</li>
+   105|              <li>多版本迭代（test_board_fixed / kicad10 / kicad6）</li>
+   106|              <li>备份文件（test_board-backups/）</li>
+   107|            </ul>
+   108|          </div>
+   109|
+   110|          <nav class="article-pager">
+   111|            <a class="pager-link" href="ai-tools-workspace.html">上一篇</a>
+   112|            <a class="pager-link" href="../index.html">回到首页</a>
+   113|            <span class="pager-link is-disabled">下一篇</span>
+   114|          </nav>
+   115|        </article>
+   116|      </main>
+   117|
       <aside class="sidebar">
         <div class="sidebar-card">
           <h2 class="sidebar-title">目录</h2>
-          <nav style="font-size:0.88rem;">
-            <p style="color:var(--ink-faint);font-size:0.82rem;">滚动阅读</p>
+          <nav style="font-size:0.85rem;line-height:1.8;">
+            <a href="#cnn-dvs" class="toc-h2">一、CNN-DVS</a>
+            <a href="#dataset" class="toc-h3">数据集结构</a>
+            <a href="#experiments" class="toc-h3">实验配置</a>
+            <a href="#cnn-finn" class="toc-h2">二、CNN-FINN</a>
+            <a href="#riscv-cpu" class="toc-h2">三、RISC-V CPU 设计</a>
+            <a href="#modules" class="toc-h3">模块列表</a>
+            <a href="#test-board" class="toc-h2">四、KiCad 测试板设计</a>
           </nav>
         </div>
       </aside>
-    </div>
-
-    <footer class="site-footer">
-      <div class="site-footer-inner">
-        <span>&copy; 2026 Mufire-star</span>
-        <span>Powered by GitHub Pages</span>
-      </div>
-    </footer>
-  </div>
-</body>
-</html>
+   126|    </div>
+   127|
+   128|    <footer class="site-footer">
+   129|      <div class="site-footer-inner">
+   130|        <span>&copy; 2026 Mufire-star</span>
+   131|        <span>Powered by GitHub Pages</span>
+   132|      </div>
+   133|    </footer>
+   134|  </div>
+   135|</body>
+   136|</html>
+   137|

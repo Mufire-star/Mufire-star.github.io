@@ -1,149 +1,158 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI 工具合集：聚合 AI & AiWorkspace & DeepSeek-TUI · Mufire-star</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-  <div class="viewport">
-    <header class="site-header">
-      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
-      <nav class="main-nav">
-        <a href="../index.html" class="nav-link">首页</a>
-        <a href="../tags/index.html" class="nav-link">标签</a>
-        <a href="../categories/index.html" class="nav-link">分类</a>
-        <a href="../about/index.html" class="nav-link">关于</a>
-      </nav>
-    </header>
-
-    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-AI工具">AI 工具</a> / AI 工具合集</p>
-
-    <div class="main-grid">
-      <main class="main-content">
-        <article>
-          <header class="article-header">
-            <div class="article-meta">
-              <span class="meta-pill meta-date">2026-05-16</span>
-              <a href="../categories/index.html#category-AI工具" class="meta-pill">AI 工具</a>
-              <a href="../tags/index.html#tag-Rust" class="meta-pill">#Rust</a>
-              <a href="../tags/index.html#tag-Python" class="meta-pill">#Python</a>
-              <a href="../tags/index.html#tag-TypeScript" class="meta-pill">#TypeScript</a>
-              <a href="../tags/index.html#tag-Vue" class="meta-pill">#Vue</a>
-            </div>
-            <h1>AI 工具开发合集：聚合 AI · AiWorkspace · DeepSeek-TUI</h1>
-          </header>
-
-          <div class="article-body">
-
-            <h2>一、聚合 AI (juhe-ai)：OpenAI API 中转与账号管理系统</h2>
-            <p><strong>项目路径</strong>：<code>D:\Projects\juhe-ai</code></p>
-            <p>轻量级 OpenAI 兼容中转、账号调度与 API Key 管理系统。适合个人、小团队把多个 OpenAI 上游账号集中管理。</p>
-
-            <h3>核心功能</h3>
-            <ul>
-              <li><strong>统一入口</strong>：对外暴露一个 /v1 端点，客户端只需填写 Base URL 和本地 API Key</li>
-              <li><strong>多账号调度</strong>：支持 OpenAI OAuth 和 API Key 两种账号，后台管理启停、优先级、并发、代理</li>
-              <li><strong>分组授权</strong>：分组绑定上游账号，API Key 绑定分组，不同业务隔离使用</li>
-              <li><strong>自动故障切换</strong>：账号限流或异常时自动切换到同组其他账号</li>
-              <li><strong>用量统计</strong>：记录请求、模型、Token、耗时、成本估算，31 天趋势</li>
-              <li><strong>性能监控</strong>：首 token / 总耗时平均值和最大值趋势</li>
-            </ul>
-
-            <h3>技术栈</h3>
-            <ul>
-              <li>前端：Vue 3 + TypeScript + Ant Design Vue（中文界面）</li>
-              <li>后端：Node.js + TypeScript</li>
-              <li>存储：SQLite（无需 Redis / PostgreSQL）</li>
-            </ul>
-
-            <hr>
-
-            <h2>二、AiWorkspace：多角色 AI 协作工作台</h2>
-            <p><strong>项目路径</strong>：<code>D:\Projects\Ai_Workspace</code></p>
-            <p>本地可运行的多角色 AI 工作台，浏览器中与统一入口对话，内部由 Front / Worker / Reviewer 三个角色协作执行。</p>
-
-            <h3>功能特点</h3>
-            <ul>
-              <li>浏览器聊天入口</li>
-              <li>三角色协作闭环：Front（前端交互）→ Worker（执行任务）→ Reviewer（审查结果）</li>
-              <li>实时角色状态展示、任务流转展示、活动日志展示</li>
-              <li>最终结果展示</li>
-              <li>历史会话 + 运行历史持久化保存</li>
-              <li>每次运行生成结构化产物文件</li>
-            </ul>
-
-            <h3>技术栈</h3>
-            <ul>
-              <li>Python（纯后端，app.py 约 3000 行）</li>
-              <li>内置 HTTP 服务器 + 浏览器前端</li>
-              <li>支持 PowerShell 一键启动（aiworkspace.ps1）</li>
-            </ul>
-
-            <hr>
-
-            <h2>三、DeepSeek-TUI：Rust 实现的 DeepSeek 终端编码 Agent</h2>
-            <p><strong>项目路径</strong>：<code>D:\Projects\DeepSeek-TUI</code></p>
-            <p>Terminal coding agent for DeepSeek V4。从 <code>deepseek</code> 命令启动，流式显示推理过程，支持本地工作区编辑和自动模式。</p>
-
-            <h3>项目结构</h3>
-            <pre><code>DeepSeek-TUI/
-├── crates/
-│   ├── agent/          # Agent 核心逻辑
-│   ├── app-server/     # 应用服务器
-│   ├── cli/            # 命令行入口
-│   ├── config/         # 配置管理
-│   ├── core/           # 核心抽象
-│   ├── execpolicy/     # 执行策略
-│   ├── hooks/          # 钩子系统
-│   ├── mcp/            # Model Context Protocol
-│   ├── protocol/       # 协议定义
-│   ├── secrets/        # 密钥管理
-│   ├── state/          # 状态管理
-│   ├── tools/          # 工具集
-│   ├── tui/            # TUI 界面
-│   └── tui-core/       # TUI 核心组件
-├── Cargo.toml          # Rust workspace 配置
-└── README.md</code></pre>
-
-            <h3>技术特点</h3>
-            <ul>
-              <li>纯 Rust 实现，14 个 crate 的 workspace 架构</li>
-              <li>流式推理块显示（reasoning blocks）</li>
-              <li>本地工作区编辑 + 审批门（approval gates）</li>
-              <li>自动模式：每轮自动选择模型和思考级别</li>
-              <li>支持 npm / cargo 两种安装方式</li>
-            </ul>
-          </div>
-
-          <nav class="article-pager">
-            <a class="pager-link" href="k1-rvv-env.html">上一篇</a>
-            <a class="pager-link" href="../index.html">回到首页</a>
-            <a class="pager-link" href="misc-projects.html">下一篇</a>
-          </nav>
-        </article>
-      </main>
-
+     1|<!DOCTYPE html>
+     2|<html lang="zh-CN">
+     3|<head>
+     4|  <meta charset="UTF-8">
+     5|  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|  <title>AI 工具合集：聚合 AI & AiWorkspace & DeepSeek-TUI · Mufire-star</title>
+     7|  <link rel="preconnect" href="https://fonts.googleapis.com">
+     8|  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     9|  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    10|  <link rel="stylesheet" href="../css/style.css">
+    11|</head>
+    12|<body>
+    13|  <div class="viewport">
+    14|    <header class="site-header">
+    15|      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
+    16|      <nav class="main-nav">
+    17|        <a href="../index.html" class="nav-link">首页</a>
+    18|        <a href="../tags/index.html" class="nav-link">标签</a>
+    19|        <a href="../categories/index.html" class="nav-link">分类</a>
+    20|        <a href="../about/index.html" class="nav-link">关于</a>
+    21|      </nav>
+    22|    </header>
+    23|
+    24|    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-AI工具">AI 工具</a> / AI 工具合集</p>
+    25|
+    26|    <div class="main-grid">
+    27|      <main class="main-content">
+    28|        <article>
+    29|          <header class="article-header">
+    30|            <div class="article-meta">
+    31|              <span class="meta-pill meta-date">2026-05-16</span>
+    32|              <a href="../categories/index.html#category-AI工具" class="meta-pill">AI 工具</a>
+    33|              <a href="../tags/index.html#tag-Rust" class="meta-pill">#Rust</a>
+    34|              <a href="../tags/index.html#tag-Python" class="meta-pill">#Python</a>
+    35|              <a href="../tags/index.html#tag-TypeScript" class="meta-pill">#TypeScript</a>
+    36|              <a href="../tags/index.html#tag-Vue" class="meta-pill">#Vue</a>
+    37|            </div>
+    38|            <h1>AI 工具开发合集：聚合 AI · AiWorkspace · DeepSeek-TUI</h1>
+    39|          </header>
+    40|
+    41|          <div class="article-body">
+    42|
+    43|            <h2 id="juhe-ai">一、聚合 AI (juhe-ai)：OpenAI API 中转与账号管理系统</h2>
+    44|            <p><strong>项目路径</strong>：<code>D:\Projects\juhe-ai</code></p>
+    45|            <p>轻量级 OpenAI 兼容中转、账号调度与 API Key 管理系统。适合个人、小团队把多个 OpenAI 上游账号集中管理。</p>
+    46|
+    47|            <h3 id="juhe-features">核心功能</h3>
+    48|            <ul>
+    49|              <li><strong>统一入口</strong>：对外暴露一个 /v1 端点，客户端只需填写 Base URL 和本地 API Key</li>
+    50|              <li><strong>多账号调度</strong>：支持 OpenAI OAuth 和 API Key 两种账号，后台管理启停、优先级、并发、代理</li>
+    51|              <li><strong>分组授权</strong>：分组绑定上游账号，API Key 绑定分组，不同业务隔离使用</li>
+    52|              <li><strong>自动故障切换</strong>：账号限流或异常时自动切换到同组其他账号</li>
+    53|              <li><strong>用量统计</strong>：记录请求、模型、Token、耗时、成本估算，31 天趋势</li>
+    54|              <li><strong>性能监控</strong>：首 token / 总耗时平均值和最大值趋势</li>
+    55|            </ul>
+    56|
+    57|            <h3 id="juhe-features">技术栈</h3>
+    58|            <ul>
+    59|              <li>前端：Vue 3 + TypeScript + Ant Design Vue（中文界面）</li>
+    60|              <li>后端：Node.js + TypeScript</li>
+    61|              <li>存储：SQLite（无需 Redis / PostgreSQL）</li>
+    62|            </ul>
+    63|
+    64|            <hr>
+    65|
+    66|            <h2 id="juhe-ai">二、AiWorkspace：多角色 AI 协作工作台</h2>
+    67|            <p><strong>项目路径</strong>：<code>D:\Projects\Ai_Workspace</code></p>
+    68|            <p>本地可运行的多角色 AI 工作台，浏览器中与统一入口对话，内部由 Front / Worker / Reviewer 三个角色协作执行。</p>
+    69|
+    70|            <h3 id="juhe-features">功能特点</h3>
+    71|            <ul>
+    72|              <li>浏览器聊天入口</li>
+    73|              <li>三角色协作闭环：Front（前端交互）→ Worker（执行任务）→ Reviewer（审查结果）</li>
+    74|              <li>实时角色状态展示、任务流转展示、活动日志展示</li>
+    75|              <li>最终结果展示</li>
+    76|              <li>历史会话 + 运行历史持久化保存</li>
+    77|              <li>每次运行生成结构化产物文件</li>
+    78|            </ul>
+    79|
+    80|            <h3 id="juhe-features">技术栈</h3>
+    81|            <ul>
+    82|              <li>Python（纯后端，app.py 约 3000 行）</li>
+    83|              <li>内置 HTTP 服务器 + 浏览器前端</li>
+    84|              <li>支持 PowerShell 一键启动（aiworkspace.ps1）</li>
+    85|            </ul>
+    86|
+    87|            <hr>
+    88|
+    89|            <h2 id="juhe-ai">三、DeepSeek-TUI：Rust 实现的 DeepSeek 终端编码 Agent</h2>
+    90|            <p><strong>项目路径</strong>：<code>D:\Projects\DeepSeek-TUI</code></p>
+    91|            <p>Terminal coding agent for DeepSeek V4。从 <code>deepseek</code> 命令启动，流式显示推理过程，支持本地工作区编辑和自动模式。</p>
+    92|
+    93|            <h3 id="juhe-features">项目结构</h3>
+    94|            <pre><code>DeepSeek-TUI/
+    95|├── crates/
+    96|│   ├── agent/          # Agent 核心逻辑
+    97|│   ├── app-server/     # 应用服务器
+    98|│   ├── cli/            # 命令行入口
+    99|│   ├── config/         # 配置管理
+   100|│   ├── core/           # 核心抽象
+   101|│   ├── execpolicy/     # 执行策略
+   102|│   ├── hooks/          # 钩子系统
+   103|│   ├── mcp/            # Model Context Protocol
+   104|│   ├── protocol/       # 协议定义
+   105|│   ├── secrets/        # 密钥管理
+   106|│   ├── state/          # 状态管理
+   107|│   ├── tools/          # 工具集
+   108|│   ├── tui/            # TUI 界面
+   109|│   └── tui-core/       # TUI 核心组件
+   110|├── Cargo.toml          # Rust workspace 配置
+   111|└── README.md</code></pre>
+   112|
+   113|            <h3 id="juhe-features">技术特点</h3>
+   114|            <ul>
+   115|              <li>纯 Rust 实现，14 个 crate 的 workspace 架构</li>
+   116|              <li>流式推理块显示（reasoning blocks）</li>
+   117|              <li>本地工作区编辑 + 审批门（approval gates）</li>
+   118|              <li>自动模式：每轮自动选择模型和思考级别</li>
+   119|              <li>支持 npm / cargo 两种安装方式</li>
+   120|            </ul>
+   121|          </div>
+   122|
+   123|          <nav class="article-pager">
+   124|            <a class="pager-link" href="k1-rvv-env.html">上一篇</a>
+   125|            <a class="pager-link" href="../index.html">回到首页</a>
+   126|            <a class="pager-link" href="misc-projects.html">下一篇</a>
+   127|          </nav>
+   128|        </article>
+   129|      </main>
+   130|
       <aside class="sidebar">
         <div class="sidebar-card">
           <h2 class="sidebar-title">目录</h2>
-          <nav style="font-size:0.88rem;">
-            <p style="color:var(--ink-faint);font-size:0.82rem;">滚动阅读</p>
+          <nav style="font-size:0.85rem;line-height:1.8;">
+            <a href="#juhe-ai" class="toc-h2">一、聚合 AI (juhe-ai)</a>
+            <a href="#juhe-features" class="toc-h3">核心功能</a>
+            <a href="#juhe-stack" class="toc-h3">技术栈</a>
+            <a href="#aiworkspace" class="toc-h2">二、AiWorkspace</a>
+            <a href="#aiw-features" class="toc-h3">功能特点</a>
+            <a href="#aiw-stack" class="toc-h3">技术栈</a>
+            <a href="#deepseek-tui" class="toc-h2">三、DeepSeek-TUI</a>
+            <a href="#dst-structure" class="toc-h3">项目结构</a>
+            <a href="#dst-features" class="toc-h3">技术特点</a>
           </nav>
         </div>
       </aside>
-    </div>
-
-    <footer class="site-footer">
-      <div class="site-footer-inner">
-        <span>&copy; 2026 Mufire-star</span>
-        <span>Powered by GitHub Pages</span>
-      </div>
-    </footer>
-  </div>
-</body>
-</html>
+   139|    </div>
+   140|
+   141|    <footer class="site-footer">
+   142|      <div class="site-footer-inner">
+   143|        <span>&copy; 2026 Mufire-star</span>
+   144|        <span>Powered by GitHub Pages</span>
+   145|      </div>
+   146|    </footer>
+   147|  </div>
+   148|</body>
+   149|</html>
+   150|

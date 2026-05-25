@@ -378,7 +378,25 @@ body::before {
 }
 .category-card a:hover { text-decoration: none; }
 
-/* ---- 文章页 ---- */
+/* ---- 侧边栏目录 ---- */
+.toc-h2 {
+  display: block;
+  padding: 2px 0;
+  font-weight: 500;
+}
+.toc-h3 {
+  display: block;
+  padding: 1px 0 1px 12px;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+.sidebar-card nav a {
+  transition: color var(--transition);
+}
+.sidebar-card nav a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
 .article-header {
   margin-bottom: 24px;
 }
