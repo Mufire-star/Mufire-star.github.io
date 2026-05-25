@@ -2,12 +2,18 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
+
+  <script>
+    (function(){var t=localStorage.getItem('preferred-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t})();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>硅迹开源：全开源芯片设计链路 · Mufire-star</title>
+  <title>硅迹开源-全开源芯片设计链路 · Mufire-star</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <script defer src="../scripts/theme.js"></script>
+  <script defer src="../scripts/toc.js"></script>
 </head>
 <body>
   <div class="viewport">
@@ -18,6 +24,8 @@
         <a href="../tags/index.html" class="nav-link">标签</a>
         <a href="../categories/index.html" class="nav-link">分类</a>
         <a href="../about/index.html" class="nav-link">关于</a>
+      
+        <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">🌙</button>
       </nav>
     </header>
 
@@ -34,14 +42,14 @@
               <a href="../tags/index.html#tag-Python" class="meta-pill">#Python</a>
               <a href="../tags/index.html#tag-Tcl" class="meta-pill">#Tcl</a>
             </div>
-            <h1>硅迹开源 (SiliconTrace Open)：全开源数字 IC 设计链路</h1>
+            <h1>硅迹开源 (SiliconTrace Open)-全开源数字 IC 设计链路</h1>
           </header>
 
           <div class="article-body">
-            <p><strong>项目地址</strong>：<code>D:\Projects\SiliconTrace_Open</code></p>
+            <p><strong>项目地址</strong>-<code>D:\Projects\SiliconTrace_Open</code></p>
 
             <h2 id="项目概述">项目概述</h2>
-            <p>一个由在校大学生独立发起的 <strong>"全开源数字 IC 设计工作室（One-Person Studio）"</strong>。目标是验证：不依赖任何商业 EDA 软件授权，仅凭开源工具和一台电脑，能否走完从芯片设计到板级验证的完整链路。</p>
+            <p>一个由在校大学生独立发起的 <strong>"全开源数字 IC 设计工作室（One-Person Studio）"</strong>。目标是验证-不依赖任何商业 EDA 软件授权，仅凭开源工具和一台电脑，能否走完从芯片设计到板级验证的完整链路。</p>
 
             <h2 id="技术栈">技术栈</h2>
             <table>
@@ -78,7 +86,7 @@
             </ul>
 
             <h2 id="项目意义">项目意义</h2>
-            <p>硅迹开源的目标不只是"生成一个 GDSII"，而是"这颗芯片在我自己设计的板子上能不能跑起来"。核心理念是：<strong>不以单一环节（IC/PCB）作为交付物，而是以一颗在自己设计的板子上跑通了的芯片作为唯一交付标准。</strong></p>
+            <p>硅迹开源的目标不只是"生成一个 GDSII"，而是"这颗芯片在我自己设计的板子上能不能跑起来"。核心理念是-<strong>不以单一环节（IC/PCB）作为交付物，而是以一颗在自己设计的板子上跑通了的芯片作为唯一交付标准。</strong></p>
 
             <p>相比商业 EDA 的高昂授权费（华大九天等对高校学生存在授权门槛），以及开源社区缺少"最后一公里"（芯片 Bring-up 和测试载板设计）的现状，这个项目试图填补从开源 EDA 到真实可运行芯片之间的空白。</p>
 
@@ -93,9 +101,9 @@
           </div>
 
           <nav class="article-pager">
-            <a class="pager-link" href="001：hello-world.html">上一篇</a>
+            <a class="pager-link" href="001-hello-world.html">上一篇</a>
             <a class="pager-link" href="../index.html">回到首页</a>
-            <a class="pager-link" href="003：vivado-tips.html">下一篇</a>
+            <a class="pager-link" href="003-vivado-tips.html">下一篇</a>
           </nav>
         </article>
       </main>
@@ -103,17 +111,7 @@
       <aside class="sidebar">
         <div class="sidebar-card">
           <h2 class="sidebar-title">目录</h2>
-          <nav style="font-size:0.85rem;line-height:1.8;">
-            <a href="#项目概述" class="toc-h2">项目概述</a>
-            <a href="#技术栈" class="toc-h2">技术栈</a>
-            <a href="#核心流程" class="toc-h2">核心流程</a>
-            <a href="#数字线" class="toc-h3">数字线</a>
-            <a href="#系统线" class="toc-h3">系统线</a>
-            <a href="#验证线" class="toc-h3">验证线</a>
-            <a href="#当前进展" class="toc-h2">当前进展</a>
-            <a href="#项目意义" class="toc-h2">项目意义</a>
-            <a href="#后续计划" class="toc-h2">后续计划</a>
-          </nav>
+          <nav class="toc-nav"></nav>
         </div>
       </aside>
     </div>

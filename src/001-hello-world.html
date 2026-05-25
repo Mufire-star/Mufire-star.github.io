@@ -2,12 +2,18 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
+
+  <script>
+    (function(){var t=localStorage.getItem('preferred-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t})();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title> 博客开篇 · Mufire-star</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <script defer src="../scripts/theme.js"></script>
+  <script defer src="../scripts/toc.js"></script>
 </head>
 <body>
   <div class="viewport">
@@ -18,6 +24,8 @@
         <a href="../tags/index.html" class="nav-link">标签</a>
         <a href="../categories/index.html" class="nav-link">分类</a>
         <a href="../about/index.html" class="nav-link">关于</a>
+      
+        <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">🌙</button>
       </nav>
     </header>
 
@@ -73,7 +81,7 @@
           <nav class="article-pager">
             <span class="pager-link is-disabled">上一篇</span>
             <a class="pager-link" href="../index.html">回到首页</a>
-            <a class="pager-link" href="002：silicon-trace-open.html">下一篇</a>
+            <a class="pager-link" href="002-silicon-trace-open.html">下一篇</a>
           </nav>
         </article>
       </main>
@@ -81,11 +89,7 @@
       <aside class="sidebar">
         <div class="sidebar-card">
           <h2 class="sidebar-title">目录</h2>
-          <nav style="font-size:0.85rem;line-height:1.8;">
-            <a href="#why" class="toc-h2">为什么搞这个博客？</a>
-            <a href="#content" class="toc-h2">博客会写什么？</a>
-            <a href="#about-site" class="toc-h2">关于这个站</a>
-          </nav>
+          <nav class="toc-nav"></nav>
         </div>
       </aside>
     </div>

@@ -2,6 +2,10 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
+
+  <script>
+    (function(){var t=localStorage.getItem('preferred-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t})();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>私有笔记 · Mufire-star</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,6 +30,8 @@
     .private-list a small { display: block; font-weight: 400; font-size: 0.82rem; color: var(--ink-faint); margin-top: 2px; }
     @media (max-width: 480px) { .lock-input input { width: 100%; } }
   </style>
+  <script defer src="../scripts/theme.js"></script>
+  <script defer src="../scripts/toc.js"></script>
 </head>
 <body>
   <div class="viewport">
@@ -36,6 +42,8 @@
         <a href="../tags/index.html" class="nav-link">标签</a>
         <a href="../categories/index.html" class="nav-link">分类</a>
         <a href="../about/index.html" class="nav-link">关于</a>
+      
+        <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">🌙</button>
       </nav>
     </header>
 
@@ -66,7 +74,7 @@
               <small>MUSE Pi K1 嵌入式 + ZCU104 脉冲神经网络</small>
             </a>
             <a href="misc-projects.html">
-              其他项目合集：CNN-DVS · RISC-V CPU · KiCad
+              其他项目合集-CNN-DVS · RISC-V CPU · KiCad
               <small>本地未公开项目汇总</small>
             </a>
             <a href="repo-notes.html">

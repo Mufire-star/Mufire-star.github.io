@@ -2,12 +2,17 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
+
+  <script>
+    (function(){var t=localStorage.getItem('preferred-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t})();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>关于 · Mufire-star</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <script defer src="../scripts/theme.js"></script>
 </head>
 <body>
   <div class="viewport">
@@ -18,6 +23,8 @@
         <a href="../tags/index.html" class="nav-link">标签</a>
         <a href="../categories/index.html" class="nav-link">分类</a>
         <a href="index.html" class="nav-link is-active">关于</a>
+      
+        <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">🌙</button>
       </nav>
     </header>
 
@@ -31,12 +38,12 @@
             <div class="article-body">
               <p>我是 <strong>Mufire-star</strong>，一只正在努力搬砖的电子工程师，喵~ (ฅ^u u^ฅ)</p>
               <p>学习方向是 <strong>FPGA 硬件加速</strong>、<strong>RISC-V设计和验证</strong> 、<strong>Vitis HLS 高层次综合</strong> 和 <strong>AI 加速器设计</strong>。</p>
-              <p>目前在做的项目：</p>
+              <p>目前在做的项目-</p>
               <ul>
-                <li><strong>ZCU104 上的神经网络加速</strong>：PYNQ 框架 + Vitis HLS 实现硬件加速</li>
+                <li><strong>ZCU104 上的神经网络加速</strong>-PYNQ 框架 + Vitis HLS 实现硬件加速</li>
                 <li><strong>ysyx</strong></li>
               </ul>
-              <p>使用的工具链：Vivado / Vitis 2025.2 | TeX Live 2026 | Git Bash | DeepSeek API</p>
+              <p>使用的工具链-Vivado / Vitis 2025.2 | TeX Live 2026 | Git Bash | DeepSeek API</p>
               <p>偶尔也写写学术论文，用 IEEE 模板 + xelatex 编译。</p>
             </div>
           </section>

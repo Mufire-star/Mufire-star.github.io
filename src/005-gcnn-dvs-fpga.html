@@ -2,12 +2,18 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
+
+  <script>
+    (function(){var t=localStorage.getItem('preferred-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t})();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GCNN-DVS：基于事件相机的图卷积神经网络 FPGA 实现 · Mufire-star</title>
+  <title>GCNN-DVS-基于事件相机的图卷积神经网络 FPGA 实现 · Mufire-star</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <script defer src="../scripts/theme.js"></script>
+  <script defer src="../scripts/toc.js"></script>
 </head>
 <body>
   <div class="viewport">
@@ -18,6 +24,8 @@
         <a href="../tags/index.html" class="nav-link">标签</a>
         <a href="../categories/index.html" class="nav-link">分类</a>
         <a href="../about/index.html" class="nav-link">关于</a>
+      
+        <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">🌙</button>
       </nav>
     </header>
 
@@ -34,31 +42,31 @@
               <a href="../tags/index.html#tag-Python" class="meta-pill">#Python</a>
               <a href="../tags/index.html#tag-Tcl" class="meta-pill">#Tcl</a>
             </div>
-            <h1>GCNN-DVS：基于事件相机的图卷积神经网络 FPGA 加速实现</h1>
+            <h1>GCNN-DVS-基于事件相机的图卷积神经网络 FPGA 加速实现</h1>
           </header>
 
           <div class="article-body">
-            <p><strong>项目地址</strong>：<code>D:\Projects\gcnn-dvs-fpga</code>（原仓库：<a href="https://github.com/kjeziorek/gcnn-dvs-fpga" target="_blank">kjeziorek/gcnn-dvs-fpga</a>）</p>
+            <p><strong>项目地址</strong>-<code>D:\Projects\gcnn-dvs-fpga</code>（原仓库：<a href="https://github.com/kjeziorek/gcnn-dvs-fpga" target="_blank">kjeziorek/gcnn-dvs-fpga</a>）</p>
 
             <h2 id="项目概述">项目概述</h2>
             <p>这是第一个将 <strong>图卷积神经网络（GCNN）</strong> 用于事件相机数据处理并在 SoC FPGA 上实现硬件加速的开源项目。目标平台为 <strong>Zynq UltraScale+ MPSoC ZCU104</strong>，在 MNIST-DVS 和 N-Cars 数据集上评估分类性能。</p>
 
             <h2 id="硬件架构">硬件架构</h2>
-            <p>系统包含两个主要阶段：</p>
+            <p>系统包含两个主要阶段-</p>
             <ul>
-              <li><strong>异步阶段</strong>（逐事件处理）：生成图结构（Event-to-Graph），并行化处理事件流</li>
-              <li><strong>同步阶段</strong>（子图操作）：异步卷积 + 同步卷积的特征提取管线</li>
+              <li><strong>异步阶段</strong>（逐事件处理）-生成图结构（Event-to-Graph），并行化处理事件流</li>
+              <li><strong>同步阶段</strong>（子图操作）-异步卷积 + 同步卷积的特征提取管线</li>
             </ul>
             <p>使用 SystemVerilog 开发，Vitis/Vivado 2022.2 环境。</p>
 
             <h2 id="部署记录">部署记录</h2>
-            <p>在 ZCU104 上的部署过程：</p>
+            <p>在 ZCU104 上的部署过程-</p>
             <ul>
-              <li><strong>硬件接口</strong>：两个 AXI BRAM 控制器</li>
-              <li><code>axi_bram_ctrl_0</code>（基地址 0xA0002000，8KB）：写入事件数据</li>
-              <li><code>axi_bram_ctrl_1</code>（基地址 0xA0000000，8KB）：读取特征向量</li>
-              <li><strong>中断</strong>：<code>pl_ps_irq0</code> 通知 PS 读取结果</li>
-              <li><strong>PYNQ 环境</strong>：ZCU104 上已安装 PYNQ 3.0.1</li>
+              <li><strong>硬件接口</strong>-两个 AXI BRAM 控制器</li>
+              <li><code>axi_bram_ctrl_0</code>（基地址 0xA0002000，8KB）-写入事件数据</li>
+              <li><code>axi_bram_ctrl_1</code>（基地址 0xA0000000，8KB）-读取特征向量</li>
+              <li><strong>中断</strong>-<code>pl_ps_irq0</code> 通知 PS 读取结果</li>
+              <li><strong>PYNQ 环境</strong>-ZCU104 上已安装 PYNQ 3.0.1</li>
             </ul>
 
             <h2 id="通信协议">通信协议</h2>
@@ -66,9 +74,9 @@
 
             <h2 id="关键技术点">关键技术点</h2>
             <ul>
-              <li><strong>内存初始化</strong>：权重固化在 BRAM/URAM 中（<code>tiny_conv2_param.mem</code> 等）</li>
-              <li><strong>异步图生成</strong>：不用等所有事件到位，边到达边生成图</li>
-              <li><strong>Vivado TCL 脚本</strong>：<code>build_project.tcl</code> 包含完整 BD 创建和综合实现设置</li>
+              <li><strong>内存初始化</strong>-权重固化在 BRAM/URAM 中（<code>tiny_conv2_param.mem</code> 等）</li>
+              <li><strong>异步图生成</strong>-不用等所有事件到位，边到达边生成图</li>
+              <li><strong>Vivado TCL 脚本</strong>-<code>build_project.tcl</code> 包含完整 BD 创建和综合实现设置</li>
             </ul>
 
             <h2 id="后续计划">后续计划</h2>
@@ -80,7 +88,7 @@
           </div>
 
           <nav class="article-pager">
-            <a class="pager-link" href="004：ai-tools-workspace.html">上一篇</a>
+            <a class="pager-link" href="004-ai-tools-workspace.html">上一篇</a>
             <a class="pager-link" href="../index.html">回到首页</a>
             <span class="pager-link is-disabled">下一篇</span>
           </nav>
@@ -90,14 +98,7 @@
       <aside class="sidebar">
         <div class="sidebar-card">
           <h2 class="sidebar-title">目录</h2>
-          <nav style="font-size:0.85rem;line-height:1.8;">
-            <a href="#项目概述" class="toc-h2">项目概述</a>
-            <a href="#硬件架构" class="toc-h2">硬件架构</a>
-            <a href="#部署记录" class="toc-h2">部署记录</a>
-            <a href="#通信协议" class="toc-h2">通信协议</a>
-            <a href="#关键技术点" class="toc-h2">关键技术点</a>
-            <a href="#后续计划" class="toc-h2">后续计划</a>
-          </nav>
+          <nav class="toc-nav"></nav>
         </div>
       </aside>
     </div>

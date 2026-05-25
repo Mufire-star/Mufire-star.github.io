@@ -2,6 +2,10 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
+
+  <script>
+    (function(){var t=localStorage.getItem('preferred-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t})();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>分类 · Mufire-star</title>
   <link rel="stylesheet" href="../css/style.css">
@@ -19,6 +23,7 @@
     .cat-card-empty { font-size: 0.82rem; color: var(--ink-faint); font-style: italic; }
     @media (max-width: 640px) { .cat-grid { grid-template-columns: 1fr; } }
   </style>
+  <script defer src="../scripts/theme.js"></script>
 </head>
 <body>
   <div class="viewport">
@@ -29,6 +34,8 @@
         <a href="../tags/index.html" class="nav-link">标签</a>
         <a href="index.html" class="nav-link is-active">分类</a>
         <a href="../about/index.html" class="nav-link">关于</a>
+      
+        <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">🌙</button>
       </nav>
     </header>
     <p class="breadcrumb"><a href="../index.html">首页</a> / 分类</p>
@@ -36,11 +43,11 @@
       <main class="main-content">
         <div class="section-heading"><h1 class="section-title" style="font-size:1.4rem;">分类</h1><span class="section-count">5 个</span></div>
         <div class="cat-grid">
-          <section class="cat-card" id="category-硬件加速"><div class="cat-card-head"><h2>硬件加速</h2><span class="badge">2</span></div><div class="cat-card-list"><a href="../src/005：gcnn-dvs-fpga.html">GCNN-DVS：图卷积神经网络 FPGA</a><a href="../src/003：vivado-tips.html">Vivado / Vitis 使用小记</a></div></section>
-          <section class="cat-card" id="category-芯片设计"><div class="cat-card-head"><h2>芯片设计</h2><span class="badge">1</span></div><div class="cat-card-list"><a href="../src/002：silicon-trace-open.html">硅迹开源：全开源芯片设计链路</a></div></section>
-          <section class="cat-card" id="category-AI工具"><div class="cat-card-head"><h2>AI 工具</h2><span class="badge">1</span></div><div class="cat-card-list"><a href="../src/004：ai-tools-workspace.html">AI 工具合集</a></div></section>
-          <section class="cat-card" id="category-工具链"><div class="cat-card-head"><h2>工具链</h2><span class="badge">1</span></div><div class="cat-card-list"><a href="../src/003：vivado-tips.html">Vivado / Vitis 使用小记</a></div></section>
-          <section class="cat-card" id="category-随笔"><div class="cat-card-head"><h2>随笔</h2><span class="badge">1</span></div><div class="cat-card-list"><a href="../src/001：hello-world.html">你好，世界！</a></div></section>
+          <section class="cat-card" id="category-硬件加速"><div class="cat-card-head"><h2>硬件加速</h2><span class="badge">2</span></div><div class="cat-card-list"><a href="../src/005-gcnn-dvs-fpga.html">GCNN-DVS-图卷积神经网络 FPGA</a><a href="../src/003-vivado-tips.html">Vivado / Vitis 使用小记</a></div></section>
+          <section class="cat-card" id="category-芯片设计"><div class="cat-card-head"><h2>芯片设计</h2><span class="badge">1</span></div><div class="cat-card-list"><a href="../src/002-silicon-trace-open.html">硅迹开源-全开源芯片设计链路</a></div></section>
+          <section class="cat-card" id="category-AI工具"><div class="cat-card-head"><h2>AI 工具</h2><span class="badge">1</span></div><div class="cat-card-list"><a href="../src/004-ai-tools-workspace.html">AI 工具合集</a></div></section>
+          <section class="cat-card" id="category-工具链"><div class="cat-card-head"><h2>工具链</h2><span class="badge">1</span></div><div class="cat-card-list"><a href="../src/003-vivado-tips.html">Vivado / Vitis 使用小记</a></div></section>
+          <section class="cat-card" id="category-随笔"><div class="cat-card-head"><h2>随笔</h2><span class="badge">1</span></div><div class="cat-card-list"><a href="../src/001-hello-world.html">你好，世界！</a></div></section>
         </div>
       </main>
       <aside class="sidebar"><div class="sidebar-card"><h2 class="sidebar-title">说明</h2><p style="font-size:0.88rem;color:var(--ink-soft);line-height:1.7;">按项目领域分类<br>共 5 个分类</p></div></aside>

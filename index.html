@@ -2,12 +2,17 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
+
+  <script>
+    (function(){var t=localStorage.getItem('preferred-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t})();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mufire-star · 博客</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script defer src="scripts/theme.js"></script>
 </head>
 <body>
 
@@ -20,6 +25,8 @@
         <a href="tags/index.html" class="nav-link">标签</a>
         <a href="categories/index.html" class="nav-link">分类</a>
         <a href="about/index.html" class="nav-link">关于</a>
+      
+        <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">🌙</button>
       </nav>
     </header>
 
@@ -59,7 +66,7 @@
           <div class="post-list">
 
             <article class="post-card">
-              <h3 class="post-card-title"><a href="src/005：gcnn-dvs-fpga.html">005：GCNN-DVS：基于事件相机的图卷积神经网络 FPGA 加速</a></h3>
+              <h3 class="post-card-title"><a href="src/005-gcnn-dvs-fpga.html">005-GCNN-DVS-基于事件相机的图卷积神经网络 FPGA 加速</a></h3>
               <div class="post-card-meta">
                 <span class="meta-pill meta-date">2026-05-19</span>
                 <a href="categories/index.html#category-硬件加速" class="meta-pill">硬件加速</a>
@@ -73,7 +80,7 @@
             </article>
 
             <article class="post-card">
-              <h3 class="post-card-title"><a href="src/004：ai-tools-workspace.html">004：AI 工具合集：聚合 AI · AiWorkspace · DeepSeek-TUI</a></h3>
+              <h3 class="post-card-title"><a href="src/004-ai-tools-workspace.html">004-AI 工具合集-聚合 AI · AiWorkspace · DeepSeek-TUI</a></h3>
               <div class="post-card-meta">
                 <span class="meta-pill meta-date">2026-05-16</span>
                 <a href="categories/index.html#category-AI工具" class="meta-pill">AI 工具</a>
@@ -88,7 +95,7 @@
             </article>
 
             <article class="post-card">
-              <h3 class="post-card-title"><a href="src/003：vivado-tips.html">003：Vivado / Vitis 2025.2 使用小记</a></h3>
+              <h3 class="post-card-title"><a href="src/003-vivado-tips.html">003-Vivado / Vitis 2025.2 使用小记</a></h3>
               <div class="post-card-meta">
                 <span class="meta-pill meta-date">2026-05-15</span>
                 <a href="categories/index.html#category-工具链" class="meta-pill">工具链</a>
@@ -101,7 +108,7 @@
             </article>
 
             <article class="post-card">
-              <h3 class="post-card-title"><a href="src/002：silicon-trace-open.html">002：硅迹开源 (SiliconTrace Open)：全开源芯片设计链路</a></h3>
+              <h3 class="post-card-title"><a href="src/002-silicon-trace-open.html">002-硅迹开源 (SiliconTrace Open)-全开源芯片设计链路</a></h3>
               <div class="post-card-meta">
                 <span class="meta-pill meta-date">2026-05-14</span>
                 <a href="categories/index.html#category-芯片设计" class="meta-pill">芯片设计</a>
@@ -115,7 +122,7 @@
             </article>
 
             <article class="post-card">
-              <h3 class="post-card-title"><a href="src/001：hello-world.html">001：你好，世界！—— 博客开篇</a></h3>
+              <h3 class="post-card-title"><a href="src/001-hello-world.html">001-你好，世界！—— 博客开篇</a></h3>
               <div class="post-card-meta">
                 <span class="meta-pill meta-date">2026-05-24</span>
                 <a href="categories/index.html#category-随笔" class="meta-pill">随笔</a>
