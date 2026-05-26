@@ -30,7 +30,7 @@
 
 <div class="callout callout-note">
 
-<strong>注意<strong> bner0 的 addr 在高位 bits[5:2]，rs 在低位 bits[1:0]，与 add/li 的 rd/rs 位置不同。
+<strong>注意</strong> bner0 的 addr 在高位 bits[5:2]，rs 在低位 bits[1:0]，与 add/li 的 rd/rs 位置不同。
 
 </div>
 
@@ -67,10 +67,10 @@
 这个rom的实现，我个人是用多路选择器，比较方便更改指令，而且搭建也比较简单。
 
     下面是正常搭的
-![alt text](img/006-ysyx-f5/image.png)
+![alt text](img/002-ysyx-f5/image.png)
 
     下面是选择器搭的：
-![alt text](img/006-ysyx-f5/image-1.png)
+![alt text](img/002-ysyx-f5/image-1.png)
 
 ## 5.1.2 实现GPR机器写入功能
 <div class="callout callout-question">
@@ -80,7 +80,7 @@
 </div>
 
 GPR有四个，每个是8位：
-![alt text](img/006-ysyx-f5/image-2.png)
+![alt text](img/002-ysyx-f5/image-2.png)
 
 ## 5.1.3 实现仅支持li指令的sCPU
 <div class="callout callout-question">
@@ -90,7 +90,7 @@ GPR有四个，每个是8位：
 </div>
  
  读取rom里的值，按照li指令向寄存器写入
- ![alt text](img/006-ysyx-f5/image-3.png)
+ ![alt text](img/002-ysyx-f5/image-3.png)
 
 ## 5.2.1 添加add指令
 <div class="callout callout-question">
@@ -104,7 +104,7 @@ GPR有四个，每个是8位：
   - 第1个读端口: `raddr1`(读地址), `rdata1`(读数据)
   - 第2个读端口: `raddr2`, `rdata2`
   - 写端口: `waddr`(写地址), `wdata`(写数据), `wen`(写使能), `clk`(时钟)
-![alt text](img/006-ysyx-f5/image-4.png)
+![alt text](img/002-ysyx-f5/image-4.png)
 如图，这样就可以满足`add`指令，同时读取两个源操作数、写入一个寄存器的操作了。
 
 接着，我们要实现一个译码功能：判断命令是`add`还是`li`，不同信号输入输出不一样：
@@ -116,7 +116,7 @@ GPR有四个，每个是8位：
   - 需要`rdata1`和`rdata2`作为输出，相加后给`wdata`
   - 根据`en`和`waddr`以及时钟信号更新GPR
 
-![alt text](img/006-ysyx-f5/image-5.png)
+![alt text](img/002-ysyx-f5/image-5.png)
 这是实现指令的例子；依旧用多路选择器判断`wdata`，译码器判断高二位`op`判断命令
 
 ## 5.2.2 添加bner0 指令
@@ -136,16 +136,17 @@ GPR有四个，每个是8位：
 - 对比`R[0]`和`R[rs2]`，这个程序里是0和2处的对比。
 
 求和程序的最终结果是`0x37`,`r2=55=0x37`
-![alt text](img/006-ysyx-f5/image-6.png)
+![alt text](img/002-ysyx-f5/image-6.png)
 结果如图。
 
 ## 5.3.1 计算10以内的奇数和。
-<div class="callout callout-extra">
+<div class="callout callout-question">
 
 编写一段指令序列，计算10以内的奇数之和，即`1+3+5+7+9`。然后尝试用你设计的sCPU执行这段指令序列，检查运行结果是否符合预期。
 
 </div>
 
+列出指令：
 ```
     10001011    # 0: li r0, 11   → 终止值（奇数到11结束）
     10010001    # 1: li r1, 1    → 当前奇数，从1开始
@@ -156,3 +157,28 @@ GPR有四个，每个是8位：
     11010001    # 6: bner0 r1, 4     → if odd != 11 → 继续循环
     11011111    # 7: bner0 r3, 7     → 自旋停机
 ```
+只需要修改rom里的值就行，也就是修改rom作用的那个选择器的输出值。
+
+## 5.3.2 添加新指令
+<div class="callout callout-question">
+
+尝试为sISA添加一条新指令out rs, 执行该指令后, 会将R[rs]以十六进制的形式输出到七段数码管. 你可以自行决定这条指令的编码.
+
+然后, 在sCPU中实现out指令, 并修改数列求和程序, 使得在计算出结果后, 能在七段数码管中显示计算结果.
+
+</div>
+
+```
+ 7  6 5  4 3   2 1   0
++----+----+-----+-----+
+| 00 | rd | rs1 | rs2 | R[rd]=R[rs1]+R[rs2]       add指令, 寄存器相加
++----+----+-----+-----+
+| 10 | rd |    imm    | R[rd]=imm                 li指令, 装入立即数, 高位补０
++----+----+-----+-----+
+| 11 |   addr   | rs2 | if (R[0]!=R[rs2]) PC=addr bner0指令, 若不等于R[0]则跳转 
++----+----------+-----+
+| 01 |   none   | rs2 | R[rs2] -> 七段数码管       out指令，将R[rs2]的值输出到数码管。
++----+----------+-----+
+```
+读取rs2作为输出；为了稳定输出，我用了一个pc和7的比较器来和时钟信号与，让系统停在`pc=7`，也就是显示数码管的位置。
+![alt text](img/002-ysyx-f5/image-7.png)

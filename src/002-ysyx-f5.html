@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+
+  <script>
+    (function(){var t=localStorage.getItem('preferred-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t})();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> 一生一芯f5 · Mufire-star</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script defer src="../scripts/theme.js"></script>
+  <script defer src="../scripts/toc.js"></script>
+</head>
+<body>
+  <div class="viewport">
+<header class="site-header">
+      <a href="../index.html" class="site-logo">Mufire<span class="dot">.</span>star</a>
+      <nav class="main-nav">
+        <a href="../index.html" class="nav-link">首页</a>
+        <a href="../tags/index.html" class="nav-link">标签</a>
+        <a href="../categories/index.html" class="nav-link">分类</a>
+        <a href="../about/index.html" class="nav-link">关于</a>
+      
+        <button class="theme-toggle" onclick="toggleTheme()" title="切换主题">🌙</button>
+      </nav>
+    </header>
+    <p class="breadcrumb"><a href="../index.html">首页</a> / <a href="../categories/index.html#category-计算机系统">计算机系统</a> / 体系结构 / 一生一芯f5</p>
+    <div class="main-grid">
+      <main class="main-content">
+        <article>
+          <header class="article-header">
+            <h1>002-一生一芯f5</h1>
+            <div class="article-meta">
+              <span class="meta-pill meta-date">2026-05-25</span>
+              <a href="../categories/index.html#category-计算机系统" class="meta-pill">计算机系统</a>
+              <span class="meta-pill">体系结构</span>
+              <a href="../tags/index.html#tag-logisim" class="meta-pill">#logisim</a>
+            </div>
+          </header>
+
+          <div class="article-body">
+<h1 id="f5-支持数列求和的简单处理器">F5 支持数列求和的简单处理器</h1>
+<p>已经学习过了数字逻辑电路的知识，现在实现一个小的cpu.</p>
+<p>我们先明确一下要实现指令集sISA的细节，多了寄存器的位宽。</p>
+<ul>
+<li>PC 位宽为 4 位，初值为 <code>0</code></li>
+<li>GPR 有 4 个，位宽均为 8 位</li>
+<li>支持如下 3 条指令</li>
+</ul>
+<pre><code> 7  6 5  4 3   2 1   0
++----+----+-----+-----+
+| 00 | rd | rs1 | rs2 | R[rd]=R[rs1]+R[rs2]       add指令, 寄存器相加
++----+----+-----+-----+
+| 10 | rd |    imm    | R[rd]=imm                 li指令, 装入立即数, 高位补０
++----+----+-----+-----+
+| 11 |   addr   | rs2 | if (R[0]!=R[rs2]) PC=addr bner0指令, 若不等于R[0]则跳转
++----+----------+-----+</code></pre>
+<h3 id="指令说明" data-toc="skip">指令说明</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">指令</th>
+<th style="text-align: center;">操作码</th>
+<th style="text-align: left;">格式</th>
+<th style="text-align: left;">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>add rd, rs1, rs2</code></td>
+<td style="text-align: center;"><code>00</code></td>
+<td style="text-align: left;"><code>00</code> + <code>rd[5:4]</code> + <code>rs1[3:2]</code> + <code>rs2[1:0]</code></td>
+<td style="text-align: left;">rd = rs1 + rs2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>li rd, imm</code></td>
+<td style="text-align: center;"><code>10</code></td>
+<td style="text-align: left;"><code>10</code> + <code>rd[5:4]</code> + <code>imm[3:0]</code></td>
+<td style="text-align: left;">rd = zero_ext(imm)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>bner0 rs, addr</code></td>
+<td style="text-align: center;"><code>11</code></td>
+<td style="text-align: left;"><code>11</code> + <code>addr[5:2]</code> + <code>rs[1:0]</code></td>
+<td style="text-align: left;">if R[0] != R[rs]: PC = addr</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note">
+
+<p><strong>注意</strong> bner0 的 addr 在高位 bits[5:2]，rs 在低位 bits[1:0]，与 add/li 的 rd/rs 位置不同。</p>
+</div>
+
+<h2 id="511-实现取指">5.1.1 实现取指</h2>
+<div class="callout callout-question">
+
+<p>通过多路选择器实现一个ROM，并在其中存放数列求和的指令序列，然后通过PC寄存器取出指令。你需要根据你的理解来确定ROM的规格。</p>
+</div>
+
+<p>要实现的是 <code>1+2+...+10</code>, 首先列出指令，翻译成机器码</p>
+<pre><code>0: li r0, 10
+1: li r1, 0
+2: li r2, 0
+3: li r3, 1
+4: add r1, r1, r3
+5: add r2, r2, r1
+6: bner0 r1, 4
+7: bner0 r3, 7
+
+10001010
+10010000
+10100000
+10110001
+00010111
+00101001
+11010001
+11011111</code></pre>
+<p>有 这个rom的实现，我个人是用多路选择器，比较方便更改指令，而且搭建也比较简单。</p>
+<pre><code>下面是正常搭的</code></pre>
+<p><img src="img/002-ysyx-f5/image.png" alt="alt text" /></p>
+<pre><code>下面是选择器搭的：</code></pre>
+<p><img src="img/002-ysyx-f5/image-1.png" alt="alt text" /></p>
+<h2 id="512-实现gpr机器写入功能">5.1.2 实现GPR机器写入功能</h2>
+<div class="callout callout-question">
+
+<p>在寄存器的基础上搭建一个RAM，从而实现GPR的写入功能。你需要根据你的理解来确定RAM的规格。</p>
+</div>
+
+<p>GPR有四个，每个是8位： <img src="img/002-ysyx-f5/image-2.png" alt="alt text" /></p>
+<h2 id="513-实现仅支持li指令的scpu">5.1.3 实现仅支持li指令的sCPU</h2>
+<div class="callout callout-question">
+
+<p>根据上文，用数字电路实现li的指令周期涉及的各个部件，并将它们连接起来。实现后，尝试让sCPU执行数列求和程序中的前几条li指令，并观察电路中GPR的状态是否与ISA的状态一致。</p>
+</div>
+
+<p>读取rom里的值，按照li指令向寄存器写入 <img src="img/002-ysyx-f5/image-3.png" alt="alt text" /></p>
+<h2 id="521-添加add指令">5.2.1 添加add指令</h2>
+<div class="callout callout-question">
+
+<p>根据上文，在sCPU中添加<code>add</code>指令。实现后，尝试让sCPU继续执行数列求和程序中的几条<code>add</code>指令，并观察电路中GPR的状态是否与ISA的状态一致。</p>
+</div>
+
+<p>观察add指令，引出4-5，6-7作为新的地址；同时要为GPR增加两个接口，之前的接口修改一下名称复用。</p>
+<ul>
+<li>第1个读端口: <code>raddr1</code>(读地址), <code>rdata1</code>(读数据)</li>
+<li>第2个读端口: <code>raddr2</code>, <code>rdata2</code></li>
+<li>写端口: <code>waddr</code>(写地址), <code>wdata</code>(写数据), <code>wen</code>(写使能), <code>clk</code>(时钟) <img src="img/002-ysyx-f5/image-4.png" alt="alt text" /> 如图，这样就可以满足<code>add</code>指令，同时读取两个源操作数、写入一个寄存器的操作了。</li>
+</ul>
+<p>接着，我们要实现一个译码功能：判断命令是<code>add</code>还是<code>li</code>，不同信号输入输出不一样：</p>
+<ul>
+<li><p>li:</p>
+<ul>
+<li>需要waddr和 imm作为输入，写使能信号开启（en或者wen）</li>
+</ul></li>
+<li><p>addr：</p>
+<ul>
+<li>需要<code>raddr1</code>和<code>raddr2</code>作为输入，读取该地址的数据</li>
+<li>需要<code>rdata1</code>和<code>rdata2</code>作为输出，相加后给<code>wdata</code></li>
+<li>根据<code>en</code>和<code>waddr</code>以及时钟信号更新GPR</li>
+</ul></li>
+</ul>
+<p><img src="img/002-ysyx-f5/image-5.png" alt="alt text" /> 这是实现指令的例子；依旧用多路选择器判断<code>wdata</code>，译码器判断高二位<code>op</code>判断命令</p>
+<h2 id="522-添加bner0-指令">5.2.2 添加bner0 指令</h2>
+<blockquote>
+<p>根据上文, 在sCPU中添加<code>bner0</code>指令. 实现后, 尝试让sCPU执行完整的数列求和程序, 如果你的实现正确, 你应该能看到PC最终为<code>7</code>, 且在某GPR中存放求和结果<code>55</code>.</p>
+</blockquote>
+<p>回顾<code>bner0</code>指令：</p>
+<pre><code>7  6 5         2 1  0
++----+---- -----+-----+
+| 11 |   addr   | rs2 | if (R[0]!=R[rs2]) PC=addr bner0指令, 若不等于R[0]则跳转
++----+----------+-----+</code></pre>
+<p>这个需要<code>R[rs2]</code>处的值和<code>R[0]</code>比较，可以用比较器；然后涉及到一个是否赋值的问题，还是可以用多路选择器控制<code>写使能</code> 所以，所需信号：</p>
+<ul>
+<li><code>addr</code> 的输出，改变pc的值；增加一个修改pc值的部分（依旧选择器）</li>
+<li>对比<code>R[0]</code>和<code>R[rs2]</code>，这个程序里是0和2处的对比。</li>
+</ul>
+<p>求和程序的最终结果是<code>0x37</code>,<code>r2=55=0x37</code> <img src="img/002-ysyx-f5/image-6.png" alt="alt text" /> 结果如图。</p>
+<h2 id="531-计算10以内的奇数和">5.3.1 计算10以内的奇数和。</h2>
+<div class="callout callout-question">
+
+<p>编写一段指令序列，计算10以内的奇数之和，即<code>1+3+5+7+9</code>。然后尝试用你设计的sCPU执行这段指令序列，检查运行结果是否符合预期。</p>
+</div>
+
+<p>列出指令：</p>
+<pre><code>    10001011    # 0: li r0, 11   → 终止值（奇数到11结束）
+    10010001    # 1: li r1, 1    → 当前奇数，从1开始
+    10100000    # 2: li r2, 0    → 累加和
+    10110010    # 3: li r3, 2    → 步长
+    00101001    # 4: add r2, r2, r1  → sum += odd
+    00010111    # 5: add r1, r1, r3  → odd += 2
+    11010001    # 6: bner0 r1, 4     → if odd != 11 → 继续循环
+    11011111    # 7: bner0 r3, 7     → 自旋停机</code></pre>
+<p>只需要修改rom里的值就行，也就是修改rom作用的那个选择器的输出值。</p>
+<h2 id="532-添加新指令">5.3.2 添加新指令</h2>
+<div class="callout callout-question">
+
+<p>尝试为sISA添加一条新指令out rs, 执行该指令后, 会将R[rs]以十六进制的形式输出到七段数码管. 你可以自行决定这条指令的编码.</p>
+<p>然后, 在sCPU中实现out指令, 并修改数列求和程序, 使得在计算出结果后, 能在七段数码管中显示计算结果.</p>
+</div>
+
+<pre><code> 7  6 5  4 3   2 1   0
++----+----+-----+-----+
+| 00 | rd | rs1 | rs2 | R[rd]=R[rs1]+R[rs2]       add指令, 寄存器相加
++----+----+-----+-----+
+| 10 | rd |    imm    | R[rd]=imm                 li指令, 装入立即数, 高位补０
++----+----+-----+-----+
+| 11 |   addr   | rs2 | if (R[0]!=R[rs2]) PC=addr bner0指令, 若不等于R[0]则跳转 
++----+----------+-----+
+| 01 |   none   | rs2 | R[rs2] -&gt; 七段数码管       out指令，将R[rs2]的值输出到数码管。
++----+----------+-----+</code></pre>
+<p>读取rs2作为输出；为了稳定输出，我用了一个pc和7的比较器来和时钟信号与，让系统停在<code>pc=7</code>，也就是显示数码管的位置。 <img src="img/002-ysyx-f5/image-7.png" alt="alt text" /></p>
+          </div>
+
+          <nav class="article-pager">
+            <a class="pager-link" href="001-hello-world.html">上一篇</a>
+            <a class="pager-link" href="../index.html">回到首页</a>
+            <span class="pager-link is-disabled">下一篇</span>
+          </nav>
+        </article>
+      </main>
+
+      <aside class="sidebar">
+        <div class="sidebar-card">
+          <h2 class="sidebar-title">目录</h2>
+          <nav class="toc-nav"></nav>
+        </div>
+      </aside>
+    </div>
+<footer class="site-footer">
+      <div class="site-footer-inner">
+        <span>&copy; 2026 Mufire-star</span>
+        <span>Powered by GitHub Pages</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
